@@ -1,0 +1,7 @@
+
+# osx
+
+brew install tmux
+brew install fzf
+brew install ag
+brew install reattach-to-user-namespace
