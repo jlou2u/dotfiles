@@ -1,12 +1,50 @@
+colorscheme torte
+
 noremap ; :
 noremap : ;
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set laststatus=2
+set showmatch
+set hls
+set number
+set ruler
+set directory=~/.vimtmp
+set backupdir=~/.vimbackup
+set backup
+
+set statusline=%F       "tail of the filename
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%y      "filetype
+set statusline+=%=      "left/right separator
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+
+set rtp+=/usr/local/opt/fzf
+
+set shortmess+=r
+set showmode
+set showcmd
+set listchars=eol:$
+set nowrap
 
 set shiftwidth=4
 set tabstop=4
+set shiftround
+set expandtab
+set autoindent
+set ignorecase
+set smartcase
+set incsearch
+
+map N Nzz
+map n nzz
 
 set shell=/bin/bash
 
