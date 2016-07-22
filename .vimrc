@@ -1,4 +1,6 @@
-colorscheme torte
+colorscheme darkblue
+
+syntax on
 
 noremap ; :
 noremap : ;
@@ -48,13 +50,21 @@ map n nzz
 
 set shell=/bin/bash
 
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
-Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'junegunn/fzf.vim'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'bling/vim-airline'
+Plugin 'nvie/vim-flake8'
+Plugin 'mileszs/ack.vim'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+" Plugin 'bling/vim-airline'
 call vundle#end()            " required
 
 filetype plugin indent on    " required
