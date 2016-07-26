@@ -8,3 +8,5 @@ brew install reattach-to-user-namespace
 
 # install vundle for vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+pip install --user git+git://github.com/powerline/powerline
