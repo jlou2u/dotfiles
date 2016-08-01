@@ -49,6 +49,9 @@ set incsearch
 map N Nzz
 map n nzz
 
+" remove trailing whitespace with F5 key
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
 set shell=/bin/bash
 
 if executable('ag')
@@ -71,6 +74,7 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
+Plugin 'hynek/vim-python-pep8-indent'
 call vundle#end()            " required
 
 filetype plugin indent on    " required
