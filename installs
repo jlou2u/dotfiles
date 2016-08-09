@@ -10,3 +10,6 @@ brew install reattach-to-user-namespace
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 pip install --user git+git://github.com/powerline/powerline
+
+# tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

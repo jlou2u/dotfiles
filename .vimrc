@@ -46,6 +46,9 @@ set ignorecase
 set smartcase
 set incsearch
 
+hi ColorColumn ctermbg=DarkBlue
+au FileType python set colorcolumn=80
+
 map N Nzz
 map n nzz
 
