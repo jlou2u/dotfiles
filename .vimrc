@@ -1,7 +1,16 @@
 set t_Co=256
 colorscheme darkblue
-
 syntax on
+
+" customize some colors
+hi Normal ctermbg=NONE  " use background color from terminal
+hi Visual ctermbg=0     " black instead of light text 
+hi VisualNOS ctermbg=0  
+hi DiffChange ctermfg=0 
+hi DiffText ctermfg=0 
+hi MatchParen ctermfg=0 
+hi PmenuSBar ctermfg=0 
+hi Ignore ctermfg=236
 
 noremap ; :
 noremap : ;
