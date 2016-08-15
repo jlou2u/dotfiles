@@ -54,6 +54,7 @@ set autoindent
 set ignorecase
 set smartcase
 set incsearch
+set backspace=2
 
 hi ColorColumn ctermbg=DarkBlue
 au FileType python set colorcolumn=80
