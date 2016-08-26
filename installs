@@ -13,3 +13,7 @@ pip install --user git+git://github.com/powerline/powerline
 
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# global gitignore
+ln -s ~/config/.gitignore_global ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
