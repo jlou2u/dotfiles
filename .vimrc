@@ -78,7 +78,7 @@ let g:airline_powerline_fonts = 1
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
-" Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/fzf.vim'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'nvie/vim-flake8'
