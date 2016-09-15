@@ -57,7 +57,7 @@ set incsearch
 set backspace=2
 
 hi ColorColumn ctermbg=DarkBlue
-au FileType python set colorcolumn=80
+au FileType python setlocal colorcolumn=80 expandtab
 
 map N Nzz
 map n nzz
@@ -88,6 +88,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()            " required
 
 filetype plugin indent on    " required
