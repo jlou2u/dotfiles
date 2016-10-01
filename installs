@@ -17,3 +17,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # global gitignore
 ln -s ~/config/.gitignore_global ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
+
+# fonts
+git clone https://github.com/powerline/fonts.git
