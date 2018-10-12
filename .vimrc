@@ -1,8 +1,7 @@
-set t_Co=256
-colorscheme darkblue
-syntax on
 
-" customize some colors
+set nocompatible
+colorscheme darkblue
+
 hi Normal ctermbg=NONE  " use background color from terminal
 hi Visual ctermbg=0     " black instead of light text 
 hi VisualNOS ctermbg=0  
@@ -11,12 +10,15 @@ hi DiffText ctermfg=0
 hi MatchParen ctermfg=0 
 hi PmenuSBar ctermfg=0 
 hi Ignore ctermfg=236
+hi ColorColumn ctermbg=DarkBlue
 
 noremap ; :
 noremap : ;
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+map N Nzz
+map n nzz
+
+
 set laststatus=2
 set showmatch
 set hls
@@ -26,81 +28,83 @@ set directory=~/.vimtmp
 set backupdir=~/.vimbackup
 set backup
 
-"set statusline=%F       "tail of the filename
-"set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-"set statusline+=%{&ff}] "file format
-"set statusline+=%h      "help file flag
-"set statusline+=%m      "modified flag
-"set statusline+=%r      "read only flag
-"set statusline+=%y      "filetype
-"set statusline+=%=      "left/right separator
-"set statusline+=%c,     "cursor column
-"set statusline+=%l/%L   "cursor line/total lines
-"set statusline+=\ %P    "percent through file
-
-set rtp+=/usr/local/opt/fzf
-
 set shortmess+=r
 set showmode
 set showcmd
 set listchars=eol:$
 set nowrap
-
-set shiftwidth=4
-set tabstop=4
-set shiftround
 set expandtab
-set autoindent
-set ignorecase
-set smartcase
 set incsearch
-set backspace=2
+" set rtp+=~/.nix-profile/bin/fzf
 
-hi ColorColumn ctermbg=DarkBlue
-au FileType python setlocal colorcolumn=80 expandtab
-
-map N Nzz
-map n nzz
-
-" remove trailing whitespace with F5 key
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
-set shell=/bin/bash
+let g:pymode_python = 'python3'
 
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
+""""""" Markdown
+" Markdown is now included in vim, but by default .md is read as Modula-2
+"   " files.  This fixes that, because I don't ever edit Modula-2 files :)
+autocmd BufNewFile,BufReadPost *.md,*.markdown set filetype=markdown
+autocmd FileType markdown set tw=80
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+call plug#begin('~/.vim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+Plug 'sheerun/vim-polyglot'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'tpope/vim-fugitive'
+    let g:easytags_async = 1
+    let g:easytags_by_filetype = '~/.vim/tags'
+    autocmd FileType python set tags='~/.vim/tags/python'
+    autocmd FileType ruby set tags='~/.vim/tags/ruby'
+    autocmd FileType groovy set tags='~/.vim/tags/groovy'
+set laststatus=2               " enable airline even if no splits
+  "let g:airline_theme='luna'
+  let g:airline_theme='papercolor'
+  let g:airline_powerline_fonts=1
+  let g:airline_enable_branch=1
+  let g:airline_enable_syntastic=0
+  let g:airline#extensions#ale#enabled = 1
+  let g:airline_powerline_fonts = 1
+  let g:airline_left_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_linecolumn_prefix = '␊ '
+  let g:airline_linecolumn_prefix = '␤ '
+  let g:airline_linecolumn_prefix = '¶ '
+  let g:airline_branch_prefix = '⎇ '
+  let g:airline_paste_symbol = 'ρ'
+  let g:airline_paste_symbol = 'Þ'
+  let g:airline_paste_symbol = '∥'
+  let g:airline#extensions#tabline#enabled = 0
+  let g:airline_mode_map = {
+        \ 'n' : 'N',
+        \ 'i' : 'I',
+        \ 'R' : 'REPLACE',
+        \ 'v' : 'VISUAL',
+        \ 'V' : 'V-LINE',
+        \ 'c' : 'CMD   ',
+        \ '': 'V-BLCK',
+        \ }
+  Plug 'chriskempson/base16-vim' " base16 theme
+  Plug 'dandorman/vim-colors'
+  Plug 'KKPMW/moonshine-vim'
+  Plug 'junegunn/seoul256.vim'
+  Plug 'rakr/vim-one'
+  Plug 'NLKNguyen/papercolor-theme'
 
-call vundle#begin()
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'junegunn/fzf.vim'
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'mileszs/ack.vim'
-Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'airblade/vim-gitgutter'
-call vundle#end()            " required
+  Plug 'nvie/vim-flake8'
+    au FileType python setlocal colorcolumn=80 expandtab
+    autocmd BufWritePost *.py call Flake8()
 
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
+  Plug 'airblade/vim-gitgutter'
+  Plug '/home/jlewis/.nix-profile/bin/fzf'
+  Plug 'junegunn/fzf.vim'
+  Plug 'ConradIrwin/vim-bracketed-paste'
+
+call plug#end()
