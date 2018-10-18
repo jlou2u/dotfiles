@@ -20,6 +20,7 @@ in
     pkgs.cifs-utils
     pkgs.coreutils
     pkgs.docker_compose
+    pkgs.fd
     pkgs.findutils
     pkgs.fortune
     pkgs.gawk
@@ -53,6 +54,7 @@ in
     pkgs.sbt
     pkgs.silver-searcher
     pkgs.source-code-pro
+    pkgs.sqlite
     pkgs.tcpdump
     pkgs.telnet
     pkgs.terminus_font
@@ -65,13 +67,15 @@ in
     my_vim_configurable
   ];
 
-  programs.command-not-found.enable = true;
+  programs.command-not-found.enable = false;  # requires nixos?
 
   programs.bash = {
     enable = true;
     profileExtra = ''
       . ${pkgs.fzf}/share/fzf/completion.bash
       . ${pkgs.fzf}/share/fzf/key-bindings.bash
+      # export FZF_DEFAULT_COMMAND='fd --type f'
+      export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude __pycache__'
       exec $HOME/.nix-profile/bin/fish
     '';
   };
@@ -89,6 +93,7 @@ in
       . /opt/miniconda3/etc/fish/conf.d/conda.fish
     '';
     interactiveShellInit = ''
+      set fish_greeting
       set -gx CONDA_LEFT_PROMPT 1
       conda activate
     '';
