@@ -35,6 +35,7 @@ in
     pkgs.inetutils
     pkgs.jdk8
     pkgs.ncat
+    pkgs.ncdu
     pkgs.nmap
     pkgs.nodejs
     pkgs.mc
