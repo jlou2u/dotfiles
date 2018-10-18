@@ -41,6 +41,7 @@ in
     pkgs.nodejs
     pkgs.mc
     pkgs.openssh
+    pkgs.powerline-rs
     pkgs.powerline-fonts
     pkgs.powertop
     pkgs.procps
@@ -75,7 +76,7 @@ in
       . ${pkgs.fzf}/share/fzf/completion.bash
       . ${pkgs.fzf}/share/fzf/key-bindings.bash
       # export FZF_DEFAULT_COMMAND='fd --type f'
-      export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude __pycache__'
+      export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude __pycache__ --exclude .vimbackup --exclude .vimtmp'
       exec $HOME/.nix-profile/bin/fish
     '';
   };
@@ -93,6 +94,9 @@ in
       . /opt/miniconda3/etc/fish/conf.d/conda.fish
     '';
     interactiveShellInit = ''
+      # function fish_prompt
+      #   powerline-rs --shell bare $status
+      # end
       set fish_greeting
       set -gx CONDA_LEFT_PROMPT 1
       conda activate
