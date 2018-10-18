@@ -69,6 +69,8 @@ in
   programs.bash = {
     enable = true;
     profileExtra = ''
+      . ${pkgs.fzf}/share/fzf/completion.bash
+      . ${pkgs.fzf}/share/fzf/key-bindings.bash
       exec $HOME/.nix-profile/bin/fish
     '';
   };
@@ -82,10 +84,11 @@ in
 
   programs.fish = {
     enable = true;
+    shellInit = ''
+      . /opt/miniconda3/etc/fish/conf.d/conda.fish
+    '';
     interactiveShellInit = ''
       set -gx CONDA_LEFT_PROMPT 1
-      . /opt/miniconda3/etc/fish/conf.d/conda.fish
-      . ${pkgs.fzf}/share/fish/vendor_conf.d/load-fzf-key-bindings.fish
       conda activate
     '';
   };
@@ -119,7 +122,8 @@ in
 
   programs.home-manager = {
     enable = true;
-    path = https://github.com/rycee/home-manager/archive/release-18.03.tar.gz;
+    /*path = https://github.com/rycee/home-manager/archive/release-18.03.tar.gz;*/
+    path = "/home/jlewis/code/home-manager";
   };
 
   /*

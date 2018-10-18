@@ -105,7 +105,7 @@ set laststatus=2               " enable airline even if no splits
 
   Plug 'airblade/vim-gitgutter'
   Plug '/home/jlewis/.nix-profile/bin/fzf'
-  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf.vim', {'dir': '~/.fzf', 'do': './install --all'}
   Plug 'ConradIrwin/vim-bracketed-paste'
   Plug 'ivanov/vim-ipython'
 
