@@ -97,6 +97,7 @@ set laststatus=2               " enable airline even if no splits
   Plug 'junegunn/seoul256.vim'
   Plug 'rakr/vim-one'
   Plug 'NLKNguyen/papercolor-theme'
+  Plug 'rafi/awesome-vim-colorschemes'
 
   Plug 'nvie/vim-flake8'
     au FileType python setlocal colorcolumn=80 expandtab
@@ -106,5 +107,6 @@ set laststatus=2               " enable airline even if no splits
   Plug '/home/jlewis/.nix-profile/bin/fzf'
   Plug 'junegunn/fzf.vim'
   Plug 'ConradIrwin/vim-bracketed-paste'
+  Plug 'ivanov/vim-ipython'
 
 call plug#end()
