@@ -46,6 +46,7 @@ in
     pkgs.powertop
     pkgs.procps
     pkgs.python36Full
+    pkgs.python36Packages.flake8
     pkgs.python36Packages.ipython
     pkgs.python36Packages.pip
     pkgs.python36Packages.powerline
@@ -99,7 +100,7 @@ in
       # end
       set fish_greeting
       set -gx CONDA_LEFT_PROMPT 1
-      conda activate
+      # conda activate
     '';
   };
 

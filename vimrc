@@ -3,12 +3,12 @@ set nocompatible
 colorscheme darkblue
 
 hi Normal ctermbg=NONE  " use background color from terminal
-hi Visual ctermbg=0     " black instead of light text 
-hi VisualNOS ctermbg=0  
-hi DiffChange ctermfg=0 
-hi DiffText ctermfg=0 
-hi MatchParen ctermfg=0 
-hi PmenuSBar ctermfg=0 
+hi Visual ctermbg=0     " black instead of light text
+hi VisualNOS ctermbg=0
+hi DiffChange ctermfg=0
+hi DiffText ctermfg=0
+hi MatchParen ctermfg=0
+hi PmenuSBar ctermfg=0
 hi Ignore ctermfg=236
 hi ColorColumn ctermbg=DarkBlue
 
@@ -35,6 +35,7 @@ set listchars=eol:$
 set nowrap
 set expandtab
 set incsearch
+set ignorecase
 " set rtp+=~/.nix-profile/bin/fzf
 
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
@@ -64,33 +65,14 @@ Plug 'tpope/vim-fugitive'
     autocmd FileType python set tags='~/.vim/tags/python'
     autocmd FileType ruby set tags='~/.vim/tags/ruby'
     autocmd FileType groovy set tags='~/.vim/tags/groovy'
-set laststatus=2               " enable airline even if no splits
-  "let g:airline_theme='luna'
-  let g:airline_theme='papercolor'
-  let g:airline_powerline_fonts=1
-  let g:airline_enable_branch=1
-  let g:airline_enable_syntastic=0
-  let g:airline#extensions#ale#enabled = 1
-  let g:airline_powerline_fonts = 1
-  let g:airline_left_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_linecolumn_prefix = '␊ '
-  let g:airline_linecolumn_prefix = '␤ '
-  let g:airline_linecolumn_prefix = '¶ '
-  let g:airline_branch_prefix = '⎇ '
-  let g:airline_paste_symbol = 'ρ'
-  let g:airline_paste_symbol = 'Þ'
-  let g:airline_paste_symbol = '∥'
-  let g:airline#extensions#tabline#enabled = 0
-  let g:airline_mode_map = {
-        \ 'n' : 'N',
-        \ 'i' : 'I',
-        \ 'R' : 'REPLACE',
-        \ 'v' : 'VISUAL',
-        \ 'V' : 'V-LINE',
-        \ 'c' : 'CMD   ',
-        \ '': 'V-BLCK',
-        \ }
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+    set laststatus=2               " enable airline even if no splits
+    let g:airline_theme='base16'
+    " let g:airline_powerline_fonts=1
+    let g:airline#extensions#tabline#enabled = 1
+
   Plug 'chriskempson/base16-vim' " base16 theme
   Plug 'dandorman/vim-colors'
   Plug 'KKPMW/moonshine-vim'
@@ -109,5 +91,9 @@ set laststatus=2               " enable airline even if no splits
   Plug 'junegunn/fzf.vim'
   Plug 'ConradIrwin/vim-bracketed-paste'
   Plug 'ivanov/vim-ipython'
+  Plug 'scrooloose/nerdtree'
+    let g:NERDTreeDirArrowExpandable = '--'
+    let g:NERDTreeDirArrowCollapsible = '\/'
+    map <C-n> :NERDTreeToggle<CR>
 
 call plug#end()
