@@ -10,6 +10,7 @@ in
 {
   home.sessionVariables.EDITOR = "vim";
   home.sessionVariables.PAGER = "less";
+  home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
   home.file.".vimrc".source = ./vimrc;
 
   home.packages = [
@@ -26,6 +27,7 @@ in
     pkgs.gawk
     pkgs.gcc
     pkgs.gdb
+    pkgs.glibcLocales
     pkgs.gnugrep
     pkgs.gnumake
     pkgs.gnused
@@ -62,6 +64,7 @@ in
     pkgs.terminus_font
     pkgs.terminus_font_ttf
     pkgs.tmux
+    pkgs.tree
     pkgs.unzip
     pkgs.wget
     pkgs.xz
