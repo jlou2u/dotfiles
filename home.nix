@@ -18,7 +18,7 @@ in
     pkgs.atool
     pkgs.bashCompletion
     pkgs.bzip2
-    pkgs.cifs-utils
+    # pkgs.cifs-utils
     pkgs.coreutils
     pkgs.docker_compose
     pkgs.fd
