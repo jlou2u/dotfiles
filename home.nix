@@ -103,6 +103,11 @@ in
       # end
       set fish_greeting
       set -gx CONDA_LEFT_PROMPT 1
+
+      function print_qal_funcs
+        cat $argv | perl -lne 's/\b([a-zA-Z0-9]+)\(/\n#FUNC\1END/g; print' | grep '#FUNC' | sed -e 's/#FUNC//' | perl -lne 's/(.+)END.+/\1/g; print' | sort -u | xargs -n1 echo "$argv,"
+      end
+
       # conda activate
     '';
   };
