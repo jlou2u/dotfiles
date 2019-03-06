@@ -12,6 +12,7 @@ in
   home.sessionVariables.PAGER = "less";
   home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
   home.file.".vimrc".source = ./vimrc;
+  home.file.".docker/config.json".source = ./docker_config.json;
 
   home.packages = [
     pkgs.ack
