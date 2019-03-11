@@ -58,8 +58,8 @@ nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 let g:pymode_python = 'python3'
 
-autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4 tw=80
-autocmd FileType perl   setlocal expandtab tabstop=3 shiftwidth=3 softtabstop=3 tw=80
+autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType perl   setlocal expandtab tabstop=3 shiftwidth=3 softtabstop=3
 
 """"""" Markdown
 " Markdown is now included in vim, but by default .md is read as Modula-2
