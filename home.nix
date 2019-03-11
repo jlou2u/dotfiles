@@ -8,9 +8,11 @@ let
 in
 
 {
+  home.sessionVariables.BAT_THEME = "GitHub";
   home.sessionVariables.EDITOR = "vim";
-  home.sessionVariables.PAGER = "less";
   home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
+  home.sessionVariables.PAGER = "less";
+
   home.file.".vimrc".source = ./vimrc;
   home.file.".docker/config.json".source = ./docker_config.json;
 
@@ -18,6 +20,7 @@ in
     pkgs.ack
     pkgs.atool
     pkgs.bashCompletion
+    pkgs.bat
     pkgs.bzip2
     # pkgs.cifs-utils
     pkgs.coreutils
@@ -64,6 +67,8 @@ in
     pkgs.telnet
     pkgs.terminus_font
     pkgs.terminus_font_ttf
+    pkgs.time
+    pkgs.tldr
     pkgs.tmux
     pkgs.tree
     pkgs.unzip
@@ -228,49 +233,5 @@ in
     '';
 
   };
-
-  /*
-  programs.vim = {
-    enable = true;
-    settings.number = true;
-    plugins = [
-      "ack-vim"
-      "flake8-vim"
-      "fzf-vim"
-      "python-mode"
-      "vim-airline"
-      "vim-airline-themes"
-      "vim-fugitive"
-      "vim-gitgutter"
-      "vim-ipython"
-      "vim-tmux-navigator"
-    ];
-    extraConfig = ''
-      set nocompatible
-      colorscheme darkblue
-      noremap ; :
-      noremap : ;
-      map N Nzz
-      map n nzz
-      set hls
-      set ruler
-      set laststatus=2
-      set shortmess+=r
-      set showmode
-      set showcmd
-      set listchars=eol:$
-      set nowrap
-      set expandtab
-      set incsearch
-      set rtp+=~/.nix-profile/bin/fzf
-      au FileType python setlocal colorcolumn=80 expandtab
-      autocmd BufWritePost *.py call Flake8()
-      nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-      let g:pymode_python = 'python3'
-      " let g:flake8_cmd="/opt/miniconda3/bin/flake8"
-      call vam#ActivateAddons(["vim-flake8"])
-    '';
-  };
-  */
 
 }
