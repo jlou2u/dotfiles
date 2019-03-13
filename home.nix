@@ -12,6 +12,7 @@ in
   home.sessionVariables.EDITOR = "vim";
   home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
   home.sessionVariables.PAGER = "less";
+  home.sessionVariables.PYTHONDONTWRITEBYTECODE = "true";
 
   home.file.".vimrc".source = ./vimrc;
   home.file.".docker/config.json".source = ./docker_config.json;
