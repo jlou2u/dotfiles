@@ -58,6 +58,7 @@ in
     pkgs.python36Packages.pip
     pkgs.python36Packages.powerline
     pkgs.python36Packages.virtualenv
+    pkgs.pwgen
     pkgs.ripgrep
     pkgs.rsync
     pkgs.sbt
@@ -88,6 +89,8 @@ in
       . ${pkgs.fzf}/share/fzf/key-bindings.bash
       # export FZF_DEFAULT_COMMAND='fd --type f'
       export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude __pycache__ --exclude .vimbackup --exclude .vimtmp'
+      shopt -s direxpand
+      stty -ixon
       exec $HOME/.nix-profile/bin/fish
     '';
   };
