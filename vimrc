@@ -116,5 +116,8 @@ Plug 'vim-airline/vim-airline-themes'
     let g:NERDTreeDirArrowExpandable = '--'
     let g:NERDTreeDirArrowCollapsible = '\/'
     map <C-n> :NERDTreeToggle<CR>
+  Plug 'mbbill/undotree'
+    let g:undotree_ShortIndicators = 0
+    map <F12> :UndotreeToggle<CR>
 
 call plug#end()

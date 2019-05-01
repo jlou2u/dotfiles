@@ -118,6 +118,8 @@ in
         cat $argv | perl -lne 's/\b([a-zA-Z0-9]+)\(/\n#FUNC\1END/g; print' | grep '#FUNC' | sed -e 's/#FUNC//' | perl -lne 's/(.+)END.+/\1/g; print' | sort -u | xargs -n1 echo "$argv,"
       end
 
+      alias ls="exa"
+
       # conda activate
     '';
   };
