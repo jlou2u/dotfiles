@@ -42,7 +42,7 @@ set backup
 
 set shiftwidth=4
 set tabstop=4
-set colorcolumn=80
+set colorcolumn=89
 
 set shortmess+=r
 set showmode
@@ -103,8 +103,10 @@ Plug 'vim-airline/vim-airline-themes'
   " Plug 'rafi/awesome-vim-colorschemes'
 
   Plug 'nvie/vim-flake8'
-    au FileType python setlocal colorcolumn=80 expandtab
+    au FileType python setlocal colorcolumn=89 expandtab
     autocmd BufWritePost *.py call Flake8()
+    let g:flake8_show_in_gutter = 1
+    let g:flake8_show_in_file = 1
 
   Plug 'airblade/vim-gitgutter'
   Plug '/home/jlewis/.nix-profile/bin/fzf'

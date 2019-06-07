@@ -16,6 +16,7 @@ in
 
   home.file.".vimrc".source = ./vimrc;
   home.file.".docker/config.json".source = ./docker_config.json;
+  home.file.".config/flake8".source = ./flake8;
 
   home.packages = [
     pkgs.ack
@@ -53,6 +54,7 @@ in
     pkgs.powertop
     pkgs.procps
     pkgs.python36Full
+    pkgs.python36Packages.black
     pkgs.python36Packages.flake8
     pkgs.python36Packages.ipython
     pkgs.python36Packages.pip
@@ -118,9 +120,11 @@ in
         cat $argv | perl -lne 's/\b([a-zA-Z0-9]+)\(/\n#FUNC\1END/g; print' | grep '#FUNC' | sed -e 's/#FUNC//' | perl -lne 's/(.+)END.+/\1/g; print' | sort -u | xargs -n1 echo "$argv,"
       end
 
+      # exa is better
       alias ls="exa"
 
-      # conda activate
+      # default to following symlinks
+      alias ag="ag -f"
     '';
   };
 
