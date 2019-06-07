@@ -108,6 +108,8 @@ Plug 'vim-airline/vim-airline-themes'
     let g:flake8_show_in_gutter = 1
     let g:flake8_show_in_file = 1
 
+  Plug 'ambv/black'
+
   Plug 'airblade/vim-gitgutter'
   Plug '/home/jlewis/.nix-profile/bin/fzf'
   Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
