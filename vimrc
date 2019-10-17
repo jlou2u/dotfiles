@@ -77,7 +77,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'sheerun/vim-polyglot'
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
+" Plug 'xolox/vim-easytags'
 Plug 'tpope/vim-fugitive'
     let g:easytags_async = 1
     let g:easytags_by_filetype = '~/.vim/tags'
@@ -123,5 +123,7 @@ Plug 'vim-airline/vim-airline-themes'
   Plug 'mbbill/undotree'
     let g:undotree_ShortIndicators = 0
     map <F12> :UndotreeToggle<CR>
+
+  Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()

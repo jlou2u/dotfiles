@@ -3,6 +3,7 @@
 let
   my_vim_configurable = pkgs.vim_configurable.override {
     python = pkgs.python36Full;
+    guiSupport = "off";
   };
 
 in
@@ -10,7 +11,8 @@ in
 {
   home.sessionVariables.BAT_THEME = "GitHub";
   home.sessionVariables.EDITOR = "vim";
-  home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
+  # find way to only do this for linux not osx
+  # home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
   home.sessionVariables.PAGER = "less";
   home.sessionVariables.PYTHONDONTWRITEBYTECODE = "true";
 
@@ -24,8 +26,8 @@ in
     pkgs.bashCompletion
     pkgs.bat
     pkgs.bzip2
-    # pkgs.cifs-utils
     pkgs.coreutils
+    pkgs.docker
     pkgs.docker_compose
     pkgs.fd
     pkgs.findutils
@@ -33,7 +35,7 @@ in
     pkgs.gawk
     pkgs.gcc
     pkgs.gdb
-    pkgs.glibcLocales
+    # pkgs.glibcLocales
     pkgs.gnugrep
     pkgs.gnumake
     pkgs.gnused
@@ -47,11 +49,9 @@ in
     pkgs.ncdu
     pkgs.nmap
     pkgs.nodejs
-    pkgs.mc
+    # pkgs.mc
     pkgs.openssh
-    pkgs.powerline-rs
-    pkgs.powerline-fonts
-    pkgs.powertop
+    # pkgs.powertop
     pkgs.procps
     pkgs.python36Full
     pkgs.python36Packages.black
@@ -87,13 +87,15 @@ in
   programs.bash = {
     enable = true;
     profileExtra = ''
+      . ~/.nix-profile/etc/profile.d/nix.sh
       . ${pkgs.fzf}/share/fzf/completion.bash
       . ${pkgs.fzf}/share/fzf/key-bindings.bash
       # export FZF_DEFAULT_COMMAND='fd --type f'
       export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude __pycache__ --exclude .vimbackup --exclude .vimtmp'
+      export TMUX_TMPDIR=/Users/justin/.tmuxtmp
       shopt -s direxpand
       stty -ixon
-      exec $HOME/.nix-profile/bin/fish
+      # exec $HOME/.nix-profile/bin/fish
     '';
   };
 
@@ -107,7 +109,6 @@ in
   programs.fish = {
     enable = true;
     shellInit = ''
-      . /opt/miniconda3/etc/fish/conf.d/conda.fish
     '';
     interactiveShellInit = ''
       # function fish_prompt
