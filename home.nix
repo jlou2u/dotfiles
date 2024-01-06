@@ -1,101 +1,160 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   my_vim_configurable = pkgs.vim_configurable.override {
-    python = pkgs.python36Full;
+    python3 = pkgs.python39Full;
     guiSupport = "off";
   };
 
 in
 
 {
-  home.sessionVariables.BAT_THEME = "GitHub";
-  home.sessionVariables.EDITOR = "vim";
-  # find way to only do this for linux not osx
-  # home.sessionVariables.LOCALE_ARCHIVE = pkgs.glibcLocales + "/lib/locale/locale-archive";
-  home.sessionVariables.PAGER = "less";
-  home.sessionVariables.PYTHONDONTWRITEBYTECODE = "true";
-
-  home.file.".vimrc".source = ./vimrc;
-  home.file.".docker/config.json".source = ./docker_config.json;
-  home.file.".config/flake8".source = ./flake8;
+  home.username = "justin";
+  home.homeDirectory = "/Users/justin";
 
   home.packages = [
+
+    # haskell
+    pkgs.cabal-install
+    pkgs.ghc
+    pkgs.haskell-language-server
+    pkgs.haskellPackages.stack
+
+    # python
+    pkgs.python3Full
+    pkgs.python3Packages.black
+    pkgs.python3Packages.flake8
+    pkgs.python3Packages.ipython
+    pkgs.python3Packages.pip
+    pkgs.python3Packages.powerline
+    pkgs.python3Packages.virtualenv
+
+    my_vim_configurable
     pkgs.ack
-    pkgs.atool
-    pkgs.bashCompletion
-    pkgs.bat
+    pkgs.alacritty
+    pkgs.any-nix-shell        # fish support for nix shell
+    pkgs.bash
+    pkgs.bat                  # A cat(1) clone with wings.
+    pkgs.bottom               # alternative to htop & ytop
     pkgs.bzip2
     pkgs.coreutils
     pkgs.docker
-    pkgs.docker_compose
+    pkgs.docker-compose
+    pkgs.drawio               # diagram design
+    pkgs.eza                  # a better `ls`
     pkgs.fd
     pkgs.findutils
-    pkgs.fortune
-    pkgs.gawk
-    pkgs.gcc
-    pkgs.gdb
-    # pkgs.glibcLocales
-    pkgs.gnugrep
-    pkgs.gnumake
-    pkgs.gnused
-    pkgs.gnutar
-    pkgs.go
-    pkgs.gzip
+    pkgs.fzf
     pkgs.htop
     pkgs.inetutils
-    pkgs.jdk8
-    pkgs.ncat
-    pkgs.ncdu
-    pkgs.nmap
+    pkgs.lazygit              # terminal git ui
+    pkgs.ncdu                 # disk space info (a better du)
+    pkgs.nerdfonts
     pkgs.nodejs
-    # pkgs.mc
-    pkgs.openssh
-    # pkgs.powertop
-    pkgs.procps
-    pkgs.python36Full
-    pkgs.python36Packages.black
-    pkgs.python36Packages.flake8
-    pkgs.python36Packages.ipython
-    pkgs.python36Packages.pip
-    pkgs.python36Packages.powerline
-    pkgs.python36Packages.virtualenv
     pkgs.pwgen
     pkgs.ripgrep
-    pkgs.rsync
-    pkgs.sbt
     pkgs.silver-searcher
-    pkgs.source-code-pro
-    pkgs.sqlite
-    pkgs.tcpdump
-    pkgs.telnet
-    pkgs.terminus_font
-    pkgs.terminus_font_ttf
     pkgs.time
-    pkgs.tldr
-    pkgs.tmux
     pkgs.tree
-    pkgs.unzip
-    pkgs.wget
+    pkgs.vscode
     pkgs.xz
-    pkgs.zip
-    my_vim_configurable
   ];
 
-  programs.command-not-found.enable = false;  # requires nixos?
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+    ".vimrc".source = ../../code/dotfiles/vimrc;
+
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
+  };
+
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. If you don't want to manage your shell through Home
+  # Manager then you have to manually source 'hm-session-vars.sh' located at
+  # either
+  #
+  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  /etc/profiles/per-user/justin/etc/profile.d/hm-session-vars.sh
+  #
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+
+      shell.program = "${pkgs.fish}/bin/fish";
+
+      env = {
+        "TERM" = "xterm-256color";
+      };
+
+      window.opacity = 0.95;
+
+      font = {
+        size = 16.0;
+
+        # normal.family = "Source Code Pro for Powerline";
+        # bold.family = "Source Code Pro for Powerline";
+        # italic.family = "Source Code Pro for Powerline";
+        normal.family = "Spacemono Nerd Font";
+        bold.family = "Spacemono Nerd Font";
+        italic.family = "Spacemono Nerd Font";
+      };
+
+      cursor.style = "Beam";
+
+      colors = {
+        # Default colors
+        primary = {
+          background = "0x1b182c";
+          foreground = "0xcbe3e7";
+        };
+
+        normal = {
+          black =   "0x100e23";
+          red =     "0xff8080";
+          green =   "0x95ffa4";
+          yellow =  "0xffe9aa";
+          blue =    "0x91ddff";
+          magenta = "0xc991e1";
+          cyan =    "0xaaffe4";
+          white =   "0xcbe3e7";
+        };
+
+        bright = {
+          black =   "0x565575";
+          red =     "0xff5458";
+          green =   "0x62d196";
+          yellow =  "0xffb378";
+          blue =    "0x65b2ff";
+          magenta = "0x906cff";
+          cyan =    "0x63f2f1";
+          white = "0xa6b3cc";
+        };
+      };
+    };
+  };
 
   programs.bash = {
     enable = true;
+    initExtra = ''
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    '';
     profileExtra = ''
-      . ~/.nix-profile/etc/profile.d/nix.sh
-      . ${pkgs.fzf}/share/fzf/completion.bash
-      . ${pkgs.fzf}/share/fzf/key-bindings.bash
-      # export FZF_DEFAULT_COMMAND='fd --type f'
-      export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude __pycache__ --exclude .vimbackup --exclude .vimtmp'
-      export TMUX_TMPDIR=/Users/justin/.tmuxtmp
-      shopt -s direxpand
-      stty -ixon
-      # exec $HOME/.nix-profile/bin/fish
+      [[ $- == *i* ]] && exec fish
     '';
   };
 
@@ -108,24 +167,8 @@ in
 
   programs.fish = {
     enable = true;
-    shellInit = ''
-    '';
     interactiveShellInit = ''
-      # function fish_prompt
-      #   powerline-rs --shell bare $status
-      # end
-      set fish_greeting
-      set -gx CONDA_LEFT_PROMPT 1
-
-      function print_qal_funcs
-        cat $argv | perl -lne 's/\b([a-zA-Z0-9]+)\(/\n#FUNC\1END/g; print' | grep '#FUNC' | sed -e 's/#FUNC//' | perl -lne 's/(.+)END.+/\1/g; print' | sort -u | xargs -n1 echo "$argv,"
-      end
-
-      # exa is better
-      alias ls="exa"
-
-      # default to following symlinks
-      alias ag="ag -f"
+        ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     '';
   };
 
@@ -135,31 +178,127 @@ in
 
   programs.git = {
     enable = true;
+    package = pkgs.gitAndTools.gitFull;
     userName = "Justin Lewis";
     userEmail = "justin.lewis@gmail.com";
-    extraConfig = ''
-        [gc]
-          autoDetach = false
-        [diff]
-          tool = vimdiff
-        [difftool]
-          prompt = false
-        [alias]
-          d = difftool
-        [log]
-          date = relative
-        [format]
-          pretty = format:%C(auto,yellow)%h%C(auto,red)% G? %C(auto,cyan)%>(12,trunc)%ad %C(auto,bold blue)%<(7,trunc)%aN%C(auto,bold yellow)%gD%D %C(auto,reset)%s
-          #pretty = format:%C(auto,yellow)%h%C(auto,red)% G? %C(auto,cyan)%>(12,trunc)%ad %C(auto,bold blue)%<(7,trunc)%aN%C(auto,reset)%s%C(auto,bold yellow)% gD% D
-        [core]
-          fileMode = false
-    '';
+    difftastic.enable = true;
+    extraConfig = {
+      diff.tool = "vimdiff";
+      difftool.prompt = "false";
+      log.date = "relative";
+      format.pretty = "format:%C(auto,yellow)%h%C(auto,red)% G? %C(auto,cyan)%>(12,trunc)%ad %C(auto,bold blue)%<(7,trunc)%aN%C(auto,bold yellow)%gD%D %C(auto,reset)%s";
+      core.fileMode = "false";
+    };
   };
 
-  programs.home-manager = {
+  programs.neovim = {
     enable = true;
-    /*path = https://github.com/rycee/home-manager/archive/release-18.03.tar.gz;*/
-    path = "/home/jlewis/code/home-manager";
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    plugins = [
+      pkgs.vimPlugins.airline
+      pkgs.vimPlugins.coc-css
+      pkgs.vimPlugins.coc-explorer
+      pkgs.vimPlugins.coc-fzf
+      pkgs.vimPlugins.coc-git
+      pkgs.vimPlugins.coc-highlight
+      pkgs.vimPlugins.coc-html
+      pkgs.vimPlugins.coc-json
+      pkgs.vimPlugins.coc-python
+      pkgs.vimPlugins.coc-nvim
+      pkgs.vimPlugins.coc-vimlsp
+      pkgs.vimPlugins.coc-yaml
+      pkgs.vimPlugins.fugitive
+      pkgs.vimPlugins.fzf-vim
+      pkgs.vimPlugins.ghcid
+      pkgs.vimPlugins.haskell-vim
+      pkgs.vimPlugins.nerdcommenter
+      pkgs.vimPlugins.papercolor-theme
+      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+      pkgs.vimPlugins.undotree
+      pkgs.vimPlugins.vim-airline-themes
+      pkgs.vimPlugins.vim-autoformat
+      pkgs.vimPlugins.vim-hoogle
+      pkgs.vimPlugins.vim-lastplace
+      pkgs.vimPlugins.vim-markdown
+      pkgs.vimPlugins.vim-nix
+      pkgs.vimPlugins.vim-tmux-navigator 
+      pkgs.vimPlugins.vim-trailing-whitespace 
+    ];
+
+    extraConfig = ''
+
+      set number
+
+      noremap ; :
+
+      map N Nzz
+      map n nzz
+
+      set expandtab
+      set hls
+      set ignorecase
+      set incsearch
+      set laststatus=2
+      set listchars=eol:$
+      set noshowmatch
+      set nowrap
+      set ruler
+      set shortmess+=r
+      set showcmd
+      set showmode
+
+      " guess this is the best way to skip loading this plugin
+      let g:loaded_matchparen=1
+
+      let g:airline_theme='base16'
+      let g:airline_powerline_fonts = 1
+      let g:airline_skip_empty_sections = 1
+      let g:airline#extensions#tabline#enabled = 1
+
+      nmap <space>e :CocCommand explorer --no-toggle<CR>
+
+      set autoindent
+      set nosmartindent
+
+      filetype plugin indent on
+      syntax on
+
+      set undodir=~/.vimhist/
+      set undofile
+      set undolevels=100
+      set undoreload=1000
+
+      let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+      let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+      let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+      let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+      let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+      let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+      let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+      let g:syntastic_auto_jump = 0
+
+      colorscheme darkblue
+
+      " if hidden is not set, TextEdit might fail.
+      set hidden
+
+      " You will have bad experience for diagnostic messages when it's default 4000.
+      set updatetime=300
+
+      " Use <c-space> to trigger completion.
+      inoremap <silent><expr> <c-space> coc#refresh()
+
+      " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+      " Coc only does snippet and additional edit on confirm.
+      inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+      " F5 to strip trailing whitespace
+      nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+    '';
   };
 
   programs.tmux = {
@@ -174,7 +313,7 @@ in
       set -g prefix C-t
       bind C-t send-prefix
 
-      unbind l  
+      unbind l
 
       # Pane switching unaware of vim splits
       bind h select-pane -L
@@ -188,7 +327,7 @@ in
       bind j run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys C-j) || tmux select-pane -D"
       bind k run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys C-k) || tmux select-pane -U"
       bind l run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys C-l) || tmux select-pane -R"
-      bind -n C-\ run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys 'C-\\') || tmux select-pane -l"
+      # bind -n C-\ run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys 'C-\\') || tmux select-pane -l"
 
       setw -g mode-keys vi
       bind-key -Tcopy-mode-vi 'v' send -X begin-selection
@@ -242,7 +381,15 @@ in
       # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
       run '~/.tmux/plugins/tpm/tpm'
     '';
-
   };
+
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
 
 }
