@@ -19,6 +19,7 @@ in
     pkgs.ghc
     pkgs.haskell-language-server
     pkgs.haskellPackages.stack
+    pkgs.haskellPackages.hie-bios
 
     # python
     pkgs.python3Full
@@ -197,6 +198,7 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     plugins = [
+      pkgs.vimPlugins.ale
       pkgs.vimPlugins.airline
       pkgs.vimPlugins.coc-css
       pkgs.vimPlugins.coc-explorer
@@ -209,9 +211,11 @@ in
       pkgs.vimPlugins.coc-nvim
       pkgs.vimPlugins.coc-vimlsp
       pkgs.vimPlugins.coc-yaml
+      pkgs.vimPlugins.copilot-vim
       pkgs.vimPlugins.fugitive
       pkgs.vimPlugins.fzf-vim
       pkgs.vimPlugins.ghcid
+      pkgs.vimPlugins.haskell-tools-nvim
       pkgs.vimPlugins.haskell-vim
       pkgs.vimPlugins.nerdcommenter
       pkgs.vimPlugins.papercolor-theme
@@ -223,8 +227,9 @@ in
       pkgs.vimPlugins.vim-lastplace
       pkgs.vimPlugins.vim-markdown
       pkgs.vimPlugins.vim-nix
-      pkgs.vimPlugins.vim-tmux-navigator 
-      pkgs.vimPlugins.vim-trailing-whitespace 
+      pkgs.vimPlugins.vim-tmux-navigator
+      pkgs.vimPlugins.vim-trailing-whitespace
+      pkgs.vimPlugins.vimproc
     ];
 
     extraConfig = ''
@@ -256,6 +261,7 @@ in
       let g:airline_powerline_fonts = 1
       let g:airline_skip_empty_sections = 1
       let g:airline#extensions#tabline#enabled = 1
+      let g:airline#extensions#ale#enabled = 1
 
       nmap <space>e :CocCommand explorer --no-toggle<CR>
 
