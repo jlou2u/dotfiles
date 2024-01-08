@@ -5,9 +5,7 @@ let
     python3 = pkgs.python39Full;
     guiSupport = "off";
   };
-
 in
-
 {
   home.username = "justin";
   home.homeDirectory = "/Users/justin";
@@ -20,15 +18,31 @@ in
     pkgs.haskell-language-server
     pkgs.haskellPackages.stack
     pkgs.haskellPackages.hie-bios
+    pkgs.obelisk
 
     # python
-    pkgs.python3Full
-    pkgs.python3Packages.black
-    pkgs.python3Packages.flake8
-    pkgs.python3Packages.ipython
-    pkgs.python3Packages.pip
-    pkgs.python3Packages.powerline
-    pkgs.python3Packages.virtualenv
+    (pkgs.python3Full.withPackages (ps: with ps; [
+      black
+      cython
+      flake8
+      hypothesis
+      ipython
+      jupyter
+      matplotlib
+      numexpr
+      pandas
+      pip
+      powerline
+      psycopg2
+      pyarrow
+      pyrsistent
+      pytest
+      scipy
+      sqlalchemy
+      statsmodels
+      virtualenv
+      xarray
+    ]))
 
     my_vim_configurable
     pkgs.ack
