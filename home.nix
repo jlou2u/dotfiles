@@ -23,21 +23,31 @@ in
     # python
     (pkgs.python3Full.withPackages (ps: with ps; [
       black
+      bokeh
+      click
       cython
       flake8
+      flask
+      gensim
       hypothesis
       ipython
+      isort
       jupyter
       matplotlib
+      networkx
+      numba
       numexpr
       pandas
       pip
       powerline
       psycopg2
       pyarrow
+      pymongo
       pyrsistent
       pytest
+      requests
       scipy
+      seaborn
       sqlalchemy
       statsmodels
       virtualenv
@@ -68,6 +78,7 @@ in
     pkgs.nodejs
     pkgs.pwgen
     pkgs.ripgrep
+    pkgs.sbt
     pkgs.silver-searcher
     pkgs.time
     pkgs.tree
@@ -212,8 +223,10 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     plugins = [
+      pkgs.vimPlugins.ack-vim
       pkgs.vimPlugins.ale
       pkgs.vimPlugins.airline
+      pkgs.vimPlugins.chadtree
       pkgs.vimPlugins.coc-css
       pkgs.vimPlugins.coc-explorer
       pkgs.vimPlugins.coc-fzf
@@ -244,6 +257,10 @@ in
       pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-trailing-whitespace
       pkgs.vimPlugins.vimproc
+    ];
+
+    extraPackages = [
+      pkgs.black
     ];
 
     extraConfig = ''
@@ -371,10 +388,10 @@ in
 
       # tmux-open - Key bindings
       #  In tmux copy mode:
-      #        o - "open" a highlighted selection with the system default 
+      #        o - "open" a highlighted selection with the system default
       #            program. open for OS X or xdg-open for Linux.
       #   Ctrl-o - open a highlighted selection with the $EDITOR
-      #  Shift-s - search the highlighted selection directly inside a search 
+      #  Shift-s - search the highlighted selection directly inside a search
       #            engine (defaults to google).
       set -g @plugin 'tmux-plugins/tmux-open'
 
