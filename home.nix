@@ -135,9 +135,9 @@ in
         # normal.family = "Source Code Pro for Powerline";
         # bold.family = "Source Code Pro for Powerline";
         # italic.family = "Source Code Pro for Powerline";
-        normal.family = "Spacemono Nerd Font";
-        bold.family = "Spacemono Nerd Font";
-        italic.family = "Spacemono Nerd Font";
+        normal.family = "D2CodingLigature Nerd Font";
+        bold.family = "D2CodingLigature Nerd Font";
+        italic.family = "D2CodingLigature Nerd Font";
       };
 
       cursor.style = "Beam";
