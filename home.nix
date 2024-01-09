@@ -14,7 +14,6 @@ in
     pkgs.haskell-language-server
     pkgs.haskellPackages.stack
     pkgs.haskellPackages.hie-bios
-    pkgs.obelisk
 
     # python
     (pkgs.python3Full.withPackages (ps: with ps; [
