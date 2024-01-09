@@ -4,8 +4,8 @@ let
 in
 {
   home.username = "justin";
-  home.homeDirectory = "/Users/justin";
-
+  home.homeDirectory = if (pkgs.system == "x86_64-darwin") then "/Users/justin" else "/home/justin";
+ 
   home.packages = [
 
     # haskell
