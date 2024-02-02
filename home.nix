@@ -1,6 +1,19 @@
 { config, pkgs, ... }:
 
 let
+  vimUtils = pkgs.callPackage ~/nixpkgs/pkgs/applications/editors/vim/plugins/vim-utils.nix { };
+
+  vim-dichromatic = vimUtils.buildVimPlugin {
+    pname = "vim-dichromatic";
+    version = "2022-01-16";
+    src = pkgs.fetchFromGitHub {
+      owner = "romainl";
+      repo = "vim-dichromatic";
+      rev = "9765a72ce24ddae48afe12c316583a22c82ad812";
+      sha256 = "0qzjfq2kgwwdxrblipysbmsdcd9xknfmlb27qrmg4yr0m59yz3nl";
+    };
+    meta.homepage = "https://github.com/romainl/vim-dichromatic/";
+  };
 in
 {
   home.username = "justin";
@@ -12,8 +25,9 @@ in
     pkgs.cabal-install
     pkgs.ghc
     pkgs.haskell-language-server
-    pkgs.haskellPackages.stack
     pkgs.haskellPackages.hie-bios
+    pkgs.haskellPackages.stack
+    pkgs.haskellPackages.stylish-haskell
 
     # python
     (pkgs.python3Full.withPackages (ps: with ps; [
@@ -52,6 +66,7 @@ in
       sqlalchemy
       statsmodels
       virtualenv
+      websockets
       xarray
     ]))
 
@@ -216,12 +231,18 @@ in
       pkgs.vimPlugins.ghcid
       pkgs.vimPlugins.haskell-tools-nvim
       pkgs.vimPlugins.haskell-vim
+      pkgs.vimPlugins.indent-blankline-nvim
       pkgs.vimPlugins.nerdcommenter
-      pkgs.vimPlugins.papercolor-theme
       pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+      pkgs.vimPlugins.papercolor-theme
+      pkgs.vimPlugins.stylish-haskell
+      pkgs.vimPlugins.supertab
       pkgs.vimPlugins.undotree
       pkgs.vimPlugins.vim-airline-themes
       pkgs.vimPlugins.vim-autoformat
+      pkgs.vimPlugins.vim-colorschemes
+      pkgs.vimPlugins.vim-colors-solarized
+      pkgs.vimPlugins.vim-cool
       pkgs.vimPlugins.vim-hoogle
       pkgs.vimPlugins.vim-lastplace
       pkgs.vimPlugins.vim-markdown
@@ -229,6 +250,7 @@ in
       pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-trailing-whitespace
       pkgs.vimPlugins.vimproc
+      vim-dichromatic
     ];
 
     extraPackages = [
@@ -256,6 +278,7 @@ in
       set shortmess+=r
       set showcmd
       set showmode
+      set cursorline
 
       " guess this is the best way to skip loading this plugin
       let g:loaded_matchparen=1
@@ -269,7 +292,12 @@ in
       nmap <space>e :CocCommand explorer --no-toggle<CR>
 
       set autoindent
-      set nosmartindent
+      set smartindent
+      set nocindent
+      set expandtab
+      set smarttab
+      set tabstop=2
+      set shiftwidth=2
 
       filetype plugin indent on
       syntax on
@@ -286,10 +314,11 @@ in
       let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
       let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
       let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+      let g:haskell_indent_disable = 1          " to disable indentation
 
       let g:syntastic_auto_jump = 0
 
-      colorscheme darkblue
+      colorscheme dichromatic
 
       " if hidden is not set, TextEdit might fail.
       set hidden
