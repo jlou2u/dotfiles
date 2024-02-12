@@ -15,11 +15,11 @@ let
     meta.homepage = "https://github.com/romainl/vim-dichromatic/";
   };
 in
-{
-  home.username = "justin";
-  home.homeDirectory = if (pkgs.system == "x86_64-darwin") then "/Users/justin" else "/home/justin";
+  {
+    home.username = "justin";
+    home.homeDirectory = if (pkgs.system == "x86_64-darwin") then "/Users/justin" else "/home/justin";
 
-  home.packages = [
+    home.packages = [
 
     # haskell
     pkgs.cabal-install
@@ -226,18 +226,25 @@ in
       pkgs.vimPlugins.coc-vimlsp
       pkgs.vimPlugins.coc-yaml
       pkgs.vimPlugins.copilot-vim
+      pkgs.vimPlugins.dressing-nvim
       pkgs.vimPlugins.fugitive
       pkgs.vimPlugins.fzf-vim
       pkgs.vimPlugins.ghcid
       pkgs.vimPlugins.haskell-tools-nvim
       pkgs.vimPlugins.haskell-vim
       pkgs.vimPlugins.indent-blankline-nvim
+      pkgs.vimPlugins.neogit
       pkgs.vimPlugins.nerdcommenter
+      pkgs.vimPlugins.noice-nvim
+      pkgs.vimPlugins.nvim-dap
+      pkgs.vimPlugins.nvim-lspconfig
+      pkgs.vimPlugins.nvim-notify
       pkgs.vimPlugins.nvim-treesitter.withAllGrammars
       pkgs.vimPlugins.papercolor-theme
       pkgs.vimPlugins.smartcolumn-nvim
       pkgs.vimPlugins.stylish-haskell
       pkgs.vimPlugins.supertab
+      pkgs.vimPlugins.telescope-nvim
       pkgs.vimPlugins.undotree
       pkgs.vimPlugins.vim-airline-themes
       pkgs.vimPlugins.vim-autoformat
@@ -251,6 +258,8 @@ in
       pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-trailing-whitespace
       pkgs.vimPlugins.vimproc
+      pkgs.vimPlugins.vimspector
+      pkgs.vimPlugins.which-key-nvim
       vim-dichromatic
     ];
 
@@ -282,6 +291,8 @@ in
       set showcmd
       set showmode
       set cursorline
+      set signcolumn=yes
+      set scrolloff=10
 
       " guess this is the best way to skip loading this plugin
       let g:loaded_matchparen=1
@@ -331,7 +342,7 @@ in
       set hidden
 
       " You will have bad experience for diagnostic messages when it's default 4000.
-      set updatetime=300
+      set updatetime=50
 
       " Use <c-space> to trigger completion.
       inoremap <silent><expr> <c-space> coc#refresh()
@@ -383,6 +394,20 @@ in
       require("ibl").setup { scope = { highlight = highlight } }
 
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+
+      -- telescope setup
+      local builtin = require('telescope.builtin')
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+      vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+      -- neogit setup
+      local neogit = require('neogit')
+      neogit.setup {}
+
+      -- pylsp setup
+      require'lspconfig'.pylsp.setup{}
     '';
   };
 
