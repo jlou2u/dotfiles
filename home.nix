@@ -58,17 +58,21 @@ in
       python-lsp-ruff
       python-lsp-server
       pymongo
+      pyqt5
       pyrsistent
       pytest
       requests
       scipy
       seaborn
+      sphinx
       sqlalchemy
       statsmodels
+      tabulate
       torchWithCuda
       virtualenv
       websockets
       xarray
+      xlsxwriter
     ]))
 
     pkgs.ack
