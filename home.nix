@@ -65,6 +65,7 @@ in
       seaborn
       sqlalchemy
       statsmodels
+      torchWithCuda
       virtualenv
       websockets
       xarray
@@ -171,6 +172,11 @@ in
     '';
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv = { enable = true; };
+  };
+
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [
@@ -213,6 +219,7 @@ in
       pkgs.vimPlugins.ack-vim
       pkgs.vimPlugins.ale
       pkgs.vimPlugins.airline
+      pkgs.vimPlugins.barbecue-nvim
       pkgs.vimPlugins.chadtree
       pkgs.vimPlugins.coc-css
       pkgs.vimPlugins.coc-explorer
@@ -226,6 +233,7 @@ in
       pkgs.vimPlugins.coc-vimlsp
       pkgs.vimPlugins.coc-yaml
       pkgs.vimPlugins.copilot-vim
+      pkgs.vimPlugins.diffview-nvim
       pkgs.vimPlugins.dressing-nvim
       pkgs.vimPlugins.fugitive
       pkgs.vimPlugins.fzf-vim
@@ -233,6 +241,7 @@ in
       pkgs.vimPlugins.haskell-tools-nvim
       pkgs.vimPlugins.haskell-vim
       pkgs.vimPlugins.indent-blankline-nvim
+      pkgs.vimPlugins.kanagawa-nvim
       pkgs.vimPlugins.neogit
       pkgs.vimPlugins.nerdcommenter
       pkgs.vimPlugins.noice-nvim
@@ -241,10 +250,12 @@ in
       pkgs.vimPlugins.nvim-notify
       pkgs.vimPlugins.nvim-treesitter.withAllGrammars
       pkgs.vimPlugins.papercolor-theme
+      pkgs.vimPlugins.refactoring-nvim
       pkgs.vimPlugins.smartcolumn-nvim
       pkgs.vimPlugins.stylish-haskell
       pkgs.vimPlugins.supertab
       pkgs.vimPlugins.telescope-nvim
+      pkgs.vimPlugins.tokyonight-nvim
       pkgs.vimPlugins.undotree
       pkgs.vimPlugins.vim-airline-themes
       pkgs.vimPlugins.vim-autoformat
@@ -408,6 +419,9 @@ in
 
       -- pylsp setup
       require'lspconfig'.pylsp.setup{}
+
+      -- barbecue setup
+      require('barbecue').setup()
     '';
   };
 
