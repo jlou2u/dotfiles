@@ -1,23 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  vimUtils = pkgs.callPackage ~/nixpkgs/pkgs/applications/editors/vim/plugins/vim-utils.nix { };
-
-  vim-dichromatic = vimUtils.buildVimPlugin {
-    pname = "vim-dichromatic";
-    version = "2022-01-16";
-    src = pkgs.fetchFromGitHub {
-      owner = "romainl";
-      repo = "vim-dichromatic";
-      rev = "9765a72ce24ddae48afe12c316583a22c82ad812";
-      sha256 = "0qzjfq2kgwwdxrblipysbmsdcd9xknfmlb27qrmg4yr0m59yz3nl";
-    };
-    meta.homepage = "https://github.com/romainl/vim-dichromatic/";
-  };
 in
   {
     home.username = "justin";
-    home.homeDirectory = if (pkgs.system == "x86_64-darwin") then "/Users/justin" else "/home/justin";
+    home.homeDirectory = if (builtins.elem pkgs.system ["x86_64-darwin" "aarch64-darwin"]) then "/Users/justin" else "/home/justin";
 
     home.packages = [
 
@@ -30,70 +17,71 @@ in
     pkgs.haskellPackages.stylish-haskell
 
     # python
-    (pkgs.python3Full.withPackages (ps: with ps; [
-      black
-      bokeh
-      click
-      cython
-      flake8
-      flask
-      gensim
-      hypothesis
-      ipython
-      isort
-      jupyter
-      matplotlib
-      networkx
-      numba
-      numexpr
-      pandas
-      pip
-      powerline
-      psycopg2
-      pyarrow
-      pyls-isort
-      pyls-memestra
-      pylsp-rope
-      python-lsp-black
-      python-lsp-ruff
-      python-lsp-server
-      pymongo
-      pyqt5
-      pyrsistent
-      pytest
-      requests
-      scipy
-      seaborn
-      sphinx
-      sqlalchemy
-      statsmodels
-      tabulate
-      torchWithCuda
-      virtualenv
-      websockets
-      xarray
-      xlsxwriter
-    ]))
+    # (pkgs.python3Full.withPackages (ps: with ps; [
+    #   black
+    #   bokeh
+    #   click
+    #   cython
+    #   flake8
+    #   flask
+    #   # gensim
+    #   hypothesis
+    #   ipython
+    #   isort
+    #   jupyter
+    #   matplotlib
+    #   networkx
+    #   numba
+    #   numexpr
+    #   pandas
+    #   pip
+    #   powerline
+    #   psycopg2
+    #   pyarrow
+    #   pyls-isort
+    #   pyls-memestra
+    #   pylsp-rope
+    #   python-lsp-black
+    #   python-lsp-ruff
+    #   python-lsp-server
+    #   pymongo
+    #   pyqt5
+    #   pyrsistent
+    #   pytest
+    #   requests
+    #   scipy
+    #   seaborn
+    #   sphinx
+    #   sqlalchemy
+    #   statsmodels
+    #   tabulate
+    #   # torchWithCuda
+    #   virtualenv
+    #   websockets
+    #   xarray
+    #   xlsxwriter
+    # ]))
 
     pkgs.ack
     pkgs.alacritty
     pkgs.any-nix-shell        # fish support for nix shell
-    pkgs.bash
+    # pkgs.bash
     pkgs.bat                  # A cat(1) clone with wings.
     pkgs.bottom               # alternative to htop & ytop
     pkgs.bzip2
     pkgs.coreutils
     pkgs.docker
     pkgs.docker-compose
-    pkgs.drawio               # diagram design
+    # pkgs.drawio               # diagram design
     pkgs.eza                  # a better `ls`
     pkgs.fd
     pkgs.findutils
     pkgs.fzf
+    pkgs.gnupg
     pkgs.htop
     pkgs.inetutils
     pkgs.lazygit              # terminal git ui
-    pkgs.ncdu                 # disk space info (a better du)
+    # pkgs.ncdu                 # disk space info (a better du)
     pkgs.nerdfonts
     pkgs.nodejs
     pkgs.pwgen
@@ -113,7 +101,10 @@ in
     enable = true;
     settings = {
 
-      shell.program = "${pkgs.fish}/bin/fish";
+      terminal.shell = {
+        args = ["new-session"  "-A"  "-D" "-s" "main"];
+        program = "${pkgs.tmux}/bin/tmux";
+      };
 
       env = {
         "TERM" = "xterm-256color";
@@ -204,6 +195,10 @@ in
     package = pkgs.gitAndTools.gitFull;
     userName = "Justin Lewis";
     userEmail = "justin.lewis@gmail.com";
+    signing = {
+      key = "179D1C02";
+      signByDefault = false;
+    };
     difftastic.enable = true;
     extraConfig = {
       diff.tool = "vimdiff";
@@ -213,6 +208,9 @@ in
       core.fileMode = "false";
     };
   };
+
+  programs.git-cliff.enable = true;
+  programs.gitui.enable = true;
 
   programs.neovim = {
     enable = true;
@@ -232,7 +230,7 @@ in
       pkgs.vimPlugins.coc-highlight
       pkgs.vimPlugins.coc-html
       pkgs.vimPlugins.coc-json
-      pkgs.vimPlugins.coc-python
+      # pkgs.vimPlugins.coc-python
       pkgs.vimPlugins.coc-nvim
       pkgs.vimPlugins.coc-vimlsp
       pkgs.vimPlugins.coc-yaml
@@ -275,7 +273,6 @@ in
       pkgs.vimPlugins.vimproc
       pkgs.vimPlugins.vimspector
       pkgs.vimPlugins.which-key-nvim
-      vim-dichromatic
     ];
 
     extraPackages = [
@@ -347,7 +344,8 @@ in
 
       let g:syntastic_auto_jump = 0
 
-      colorscheme dichromatic
+      " colorscheme dichromatic
+      colorscheme 3dglasses
 
       " use background color from terminal
       highlight Normal ctermbg=none
@@ -509,6 +507,16 @@ in
       # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
       run '~/.tmux/plugins/tpm/tpm'
     '';
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
   };
 
   # This value determines the Home Manager release that your configuration is
