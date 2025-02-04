@@ -41,7 +41,7 @@
   nixpkgs.config.allowUnfree = true;
 
   homebrew = {
-    enable = true;
+    enable = false;
 
     casks = [
       "bartender"

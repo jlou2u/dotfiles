@@ -65,7 +65,6 @@ in
     pkgs.ack
     pkgs.alacritty
     pkgs.any-nix-shell        # fish support for nix shell
-    # pkgs.bash
     pkgs.bat                  # A cat(1) clone with wings.
     pkgs.bottom               # alternative to htop & ytop
     pkgs.bzip2
@@ -84,6 +83,7 @@ in
     # pkgs.ncdu                 # disk space info (a better du)
     pkgs.nerdfonts
     pkgs.nodejs
+    pkgs.zsh-powerlevel10k
     pkgs.pwgen
     pkgs.ripgrep
     pkgs.sbt
@@ -157,33 +157,9 @@ in
     };
   };
 
-  programs.bash = {
-    enable = true;
-    initExtra = ''
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-    '';
-    profileExtra = ''
-      [[ $- == *i* ]] && exec fish
-    '';
-  };
-
   programs.direnv = {
     enable = true;
     nix-direnv = { enable = true; };
-  };
-
-  programs.emacs = {
-    enable = true;
-    extraPackages = epkgs: [
-      epkgs.nix-mode
-    ];
-  };
-
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-        ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
-    '';
   };
 
   programs.fzf = {
@@ -435,6 +411,9 @@ in
     customPaneNavigationAndResize = true;
     historyLimit = 10000;
     extraConfig = ''
+
+      set -g default-command ${pkgs.zsh}/bin/zsh
+
       unbind C-b
       set -g prefix C-t
       bind C-t send-prefix
@@ -512,6 +491,14 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    initExtra = "source ~/.p10k.zsh";
+    plugins = [
+      {
+        name = "zsh-powerlevel10k";
+        src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/";
+        file = "powerlevel10k.zsh-theme";
+      }
+    ];
   };
 
   services.gpg-agent = {
