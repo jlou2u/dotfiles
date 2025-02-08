@@ -3,8 +3,8 @@
 let
 in
   {
-    home.username = "justin";
-    home.homeDirectory = if (builtins.elem pkgs.system ["x86_64-darwin" "aarch64-darwin"]) then "/Users/justin" else "/home/justin";
+    home.username = "jlou2u";
+    home.homeDirectory = "/home/jlou2u";
 
     home.packages = [
 
