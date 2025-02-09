@@ -1,29 +1,22 @@
 {
-  description = "Home Manager configuration of jlou2u";
-
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    stylix.url = "github:danth/stylix";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
+  outputs = { self, nixpkgs, stylix, home-manager }: {
+    nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+      modules = [
+        stylix.nixosModules.stylix
+        ./hosts/imac/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.jlou2u = import ./hosts/imac/home.nix;
+        }
+      ];
     };
   };
-
-  outputs = { nixpkgs, home-manager, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { system = "${system}"; config.allowUnfree = true; };
-    in {
-      homeConfigurations."jlou2u" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-      };
-    };
 }
