@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, erosanix, ... }:
 
 let
 in
@@ -6,7 +6,7 @@ in
     home.username = "jlou2u";
     home.homeDirectory = "/home/jlou2u";
 
-    home.packages = [
+    home.packages = with pkgs; [
 
     # haskell
     pkgs.cabal-install
@@ -91,6 +91,7 @@ in
     pkgs.tree
     pkgs.vscode
     pkgs.xz
+    # erosanix.packages.x86_64-linux.chess-ultra
   ];
 
   # Let Home Manager install and manage itself.
@@ -161,6 +162,10 @@ in
     };
   };
 
+  programs.bat = {
+    enable = true;
+  };
+
   programs.direnv = {
     enable = true;
     nix-direnv = { enable = true; };
@@ -179,7 +184,14 @@ in
       key = "179D1C02";
       signByDefault = false;
     };
-    difftastic.enable = true;
+    # difftastic.enable = true;
+    delta = {
+      enable = true;
+      options = {
+        side-by-side = true;
+        navigate = true;
+      };
+    };
     extraConfig = {
       diff.tool = "vimdiff";
       difftool.prompt = "false";

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, erosanix, ... }:
 
 {
   imports =
@@ -11,12 +11,13 @@
     ];
 
   nix.settings.experimental-features = ["nix-command flakes"];
+  nix.settings.trusted-users = ["root" "@wheel"];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "imac-nixos"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -80,18 +81,22 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  fonts.packages = with pkgs; [
-    font-awesome
-    powerline-fonts
-    nerd-fonts.fira-code
-    nerd-fonts.droid-sans-mono
-  ];
-
   stylix = {
     enable = true;
     image = ./wallpaper.png;
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/summerfruit-light.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-light.yaml";
+    fonts = {
+      # monospace = "";
+      # sansSerif = "";
+      # serif = "";
+      sizes = {
+        applications = 10;
+        desktop = 6;
+      };
+    };
   };
-  
 
   users.defaultUserShell = pkgs.zsh;
 
@@ -111,6 +116,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # see https://github.com/NixOS/nixpkgs/issues/380196
   nixpkgs.overlays = [
 	  (final: prev: {
 		   lldb = prev.lldb.overrideAttrs {
@@ -124,6 +130,7 @@
   environment.systemPackages = with pkgs; [
     alacritty
     coreutils
+    devenv
     eza
     fzf
     git
@@ -133,7 +140,6 @@
     vim
     whitesur-gtk-theme
     wget
-
   ];
 
   # Create systemd service
