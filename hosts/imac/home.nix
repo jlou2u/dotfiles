@@ -65,7 +65,6 @@ in
     # ]))
 
     pkgs.ack
-    pkgs.alacritty
     pkgs.any-nix-shell        # fish support for nix shell
     pkgs.bat                  # A cat(1) clone with wings.
     pkgs.bottom               # alternative to htop & ytop
@@ -98,7 +97,19 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  programs.kitty.enable = true;
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window.decorations = "None";
+      window.startup_mode = "Maximized";
+      selection.save_to_clipboard = true;
+      terminal.shell = {
+        args = ["new-session" "-A" "-D" "-s" "main"];
+        program = "${pkgs.tmux}/bin/tmux";
+      };
+    };
+  };
+  programs.kitty.enable = false;
   programs.bat.enable = true;
   programs.direnv = {
     enable = true;
