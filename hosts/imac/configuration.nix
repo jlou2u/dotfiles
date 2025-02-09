@@ -92,8 +92,8 @@
       # sansSerif = "";
       # serif = "";
       sizes = {
-        applications = 10;
-        desktop = 6;
+        applications = 14;
+        desktop = 8;
       };
     };
   };

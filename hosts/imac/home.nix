@@ -6,6 +6,8 @@ in
     home.username = "jlou2u";
     home.homeDirectory = "/home/jlou2u";
 
+    programs.brave.enable = true;
+
     home.packages = with pkgs; [
 
     # haskell
@@ -96,84 +98,13 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  programs.kitty = {
-    enable = true;
-  };
-
-  programs.alacritty = {
-    enable = true;
-    settings = {
-
-      terminal.shell = {
-        args = ["new-session"  "-A"  "-D" "-s" "main"];
-        program = "${pkgs.tmux}/bin/tmux";
-      };
-
-      env = {
-        "TERM" = "xterm-256color";
-      };
-
-      # window.opacity = 0.95;
-      window.startup_mode = "Maximized";
-
-      # font = {
-      #   size = 12.0;
-
-      #   # normal.family = "Source Code Pro for Powerline";
-      #   # bold.family = "Source Code Pro for Powerline";
-      #   # italic.family = "Source Code Pro for Powerline";
-      #   normal.family = "D2CodingLigature Nerd Font";
-      #   bold.family = "D2CodingLigature Nerd Font";
-      #   italic.family = "D2CodingLigature Nerd Font";
-      # };
-
-      # cursor.style = "Beam";
-
-      # colors = {
-      #   # Default colors
-      #   primary = {
-      #     background = "0x1b182c";
-      #     foreground = "0xcbe3e7";
-      #   };
-
-      #   normal = {
-      #     black =   "0x100e23";
-      #     red =     "0xff8080";
-      #     green =   "0x95ffa4";
-      #     yellow =  "0xffe9aa";
-      #     blue =    "0x91ddff";
-      #     magenta = "0xc991e1";
-      #     cyan =    "0xaaffe4";
-      #     white =   "0xcbe3e7";
-      #   };
-
-      #   bright = {
-      #     black =   "0x565575";
-      #     red =     "0xff5458";
-      #     green =   "0x62d196";
-      #     yellow =  "0xffb378";
-      #     blue =    "0x65b2ff";
-      #     magenta = "0x906cff";
-      #     cyan =    "0x63f2f1";
-      #     white = "0xa6b3cc";
-      #   };
-      # };
-    };
-  };
-
-  programs.bat = {
-    enable = true;
-  };
-
+  programs.kitty.enable = true;
+  programs.bat.enable = true;
   programs.direnv = {
     enable = true;
     nix-direnv = { enable = true; };
   };
-
-  programs.fzf = {
-    enable = true;
-  };
+  programs.fzf.enable = true;
 
   programs.git = {
     enable = true;
