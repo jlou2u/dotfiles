@@ -80,8 +80,7 @@ in
     pkgs.htop
     pkgs.inetutils
     pkgs.lazygit              # terminal git ui
-    # pkgs.ncdu                 # disk space info (a better du)
-    pkgs.nerdfonts
+    pkgs.ncdu                 # disk space info (a better du)
     pkgs.nodejs
     pkgs.zsh-powerlevel10k
     pkgs.pwgen
@@ -113,7 +112,7 @@ in
       window.opacity = 0.95;
 
       font = {
-        size = 16.0;
+        size = 12.0;
 
         # normal.family = "Source Code Pro for Powerline";
         # bold.family = "Source Code Pro for Powerline";
@@ -492,6 +491,7 @@ in
     enable = true;
     enableCompletion = true;
     initExtra = "source ~/.p10k.zsh";
+    defaultKeymap = "emacs";
     plugins = [
       {
         name = "zsh-powerlevel10k";
@@ -513,6 +513,6 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 
 }
