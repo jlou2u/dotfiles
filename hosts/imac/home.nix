@@ -1,9 +1,16 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 
+let
+  gpgKeys = [
+    "/home/jlou2u/.ssh/pgp_github.key"
+    "/home/jlou2u/.ssh/pgp_github.pub"
+  ];
+in
 {
   home = {
     username = "jlou2u";
@@ -432,6 +439,30 @@
     enable = true;
     source = ./ov.yaml;
     target = "${config.xdg.configHome}/ov/config.yaml";
+  };
+
+  # This installs my GPG signing keys for Github
+  systemd.user.services.gpg-import-keys = {
+    Unit = {
+      Description = "Import gpg keys";
+      After = [ "gpg-agent.socket" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      ExecStart = toString (
+        pkgs.writeScript "gpg-import-keys" ''
+          #! ${pkgs.runtimeShell} -el
+          ${lib.optionalString (gpgKeys != [ ]) ''
+            ${pkgs.gnupg}/bin/gpg --import ${lib.concatStringsSep " " gpgKeys}
+          ''}
+        ''
+      );
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 
   # This value determines the Home Manager release that your configuration is

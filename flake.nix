@@ -22,6 +22,7 @@
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
+            environment.systemPackages = [ agenix.packages.x86_64-linux.agenix ];
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;

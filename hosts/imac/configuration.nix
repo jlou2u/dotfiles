@@ -9,6 +9,10 @@
   ...
 }:
 
+let
+  user = "jlou2u";
+  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMiQj3fB0odhdbTVP2sE/XPp3KyxA7nqTbVF9VOXP5zm" ];
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -54,7 +58,11 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    # Better support for general peripherals
+    libinput.enable = true;
+  };
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -64,6 +72,8 @@
   services.xserver.xkb = {
     layout = "us";
     variant = "mac";
+    # Turn Caps Lock into Ctrl
+    options = "ctrl:nocaps";
   };
 
   # Enable CUPS to print documents.
@@ -109,16 +119,34 @@
   users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.jlou2u = {
-    isNormalUser = true;
-    description = "Justin Lewis";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      thunderbird
-      home-manager
+  users.users = {
+    ${user} = {
+      isNormalUser = true;
+      description = "Justin Lewis";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+      packages = with pkgs; [
+        thunderbird
+        home-manager
+      ];
+      openssh.authorizedKeys.keys = keys;
+    };
+  };
+
+  security.sudo = {
+    enable = true;
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "${pkgs.systemd}/bin/reboot";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+        groups = [ "wheel" ];
+      }
     ];
   };
 
@@ -140,7 +168,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # agenix.packages.${system}.default
     alacritty
     coreutils
     devenv
@@ -154,6 +181,15 @@
     whitesur-gtk-theme
     wget
   ];
+
+  systemd.services.openai = {
+    enable = true;
+    description = "Set OpenAI API Key";
+    environment = {
+      OPENAI_API_KEY = "";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   # Create systemd service
   # systemd.services.logiops = {
