@@ -98,6 +98,11 @@
       pkgs.zsh-powerlevel10k
     ];
 
+    services.gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+    };
+
     # Let Home Manager install and manage itself.
     programs = {
       home-manager.enable = true;
@@ -475,15 +480,10 @@
       };
     };
 
-    home.file."${config.xdg.configHome}/ov/config.yaml" = {
+    file."${config.xdg.configHome}/ov/config.yaml" = {
       enable = true;
       source = ./ov.yaml;
       target = "${config.xdg.configHome}/ov/config.yaml";
-    };
-
-    services.gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
     };
 
     # This value determines the Home Manager release that your configuration is
@@ -493,7 +493,7 @@
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
-    home.stateVersion = "24.11"; # Please read the comment before changing.
+    stateVersion = "24.11"; # Please read the comment before changing.
 
   };
 }
