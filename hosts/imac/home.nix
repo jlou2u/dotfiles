@@ -1,14 +1,17 @@
-{ config, pkgs, erosanix, ... }:
+{
+  config,
+  pkgs,
+  erosanix,
+  ...
+}:
 
 let
 in
-  {
-    home.username = "jlou2u";
-    home.homeDirectory = "/home/jlou2u";
+{
+  home.username = "jlou2u";
+  home.homeDirectory = "/home/jlou2u";
 
-    programs.brave.enable = true;
-
-    home.packages = with pkgs; [
+  home.packages = with pkgs; [
 
     # haskell
     pkgs.cabal-install
@@ -65,25 +68,25 @@ in
     # ]))
 
     pkgs.ack
-    pkgs.any-nix-shell        # fish support for nix shell
-    pkgs.bat                  # A cat(1) clone with wings.
-    pkgs.bottom               # alternative to htop & ytop
+    pkgs.any-nix-shell # fish support for nix shell
+    pkgs.bat # A cat(1) clone with wings.
+    pkgs.bottom # alternative to htop & ytop
     pkgs.bzip2
     pkgs.coreutils
     pkgs.docker
     pkgs.docker-compose
     # pkgs.drawio               # diagram design
-    pkgs.eza                  # a better `ls`
+    pkgs.eza # a better `ls`
     pkgs.fd
     pkgs.findutils
     pkgs.fzf
     pkgs.gnupg
     pkgs.htop
     pkgs.inetutils
-    pkgs.lazygit              # terminal git ui
-    pkgs.ncdu                 # disk space info (a better du)
+    pkgs.lazygit # terminal git ui
+    pkgs.ncdu # disk space info (a better du)
     pkgs.nodejs
-    pkgs.zsh-powerlevel10k
+    pkgs.ov
     pkgs.pwgen
     pkgs.ripgrep
     pkgs.sbt
@@ -93,6 +96,7 @@ in
     pkgs.vscode
     pkgs.xz
     # erosanix.packages.x86_64-linux.chess-ultra
+    pkgs.zsh-powerlevel10k
   ];
 
   # Let Home Manager install and manage itself.
@@ -104,18 +108,23 @@ in
       window.startup_mode = "Maximized";
       selection.save_to_clipboard = true;
       terminal.shell = {
-        args = ["new-session" "-A" "-D" "-s" "main"];
+        args = [
+          "new-session"
+          "-A"
+          "-D"
+          "-s"
+          "main"
+        ];
         program = "${pkgs.tmux}/bin/tmux";
       };
     };
   };
-  programs.kitty.enable = false;
   programs.bat.enable = true;
-  programs.direnv = {
-    enable = true;
-    nix-direnv = { enable = true; };
-  };
+  programs.brave.enable = true;
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
   programs.fzf.enable = true;
+  programs.lsd.enable = true;
 
   programs.git = {
     enable = true;
@@ -451,6 +460,11 @@ in
     enableCompletion = true;
     initExtra = "source ~/.p10k.zsh";
     defaultKeymap = "emacs";
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      PAGER = "ov";
+    };
     plugins = [
       {
         name = "zsh-powerlevel10k";
@@ -458,6 +472,12 @@ in
         file = "powerlevel10k.zsh-theme";
       }
     ];
+  };
+
+  home.file."${config.xdg.configHome}/ov/config.yaml" = {
+    enable = true;
+    source = ./ov.yaml;
+    target = "${config.xdg.configHome}/ov/config.yaml";
   };
 
   services.gpg-agent = {

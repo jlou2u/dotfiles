@@ -2,16 +2,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, erosanix, ... }:
+{
+  config,
+  pkgs,
+  erosanix,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-  nix.settings.experimental-features = ["nix-command flakes"];
-  nix.settings.trusted-users = ["root" "@wheel"];
+  nix.settings.experimental-features = [ "nix-command flakes" ];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -104,7 +112,10 @@
   users.users.jlou2u = {
     isNormalUser = true;
     description = "Justin Lewis";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       thunderbird
       home-manager
@@ -113,17 +124,17 @@
 
   # Install firefox.
   programs.firefox.enable = true;
-  
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # see https://github.com/NixOS/nixpkgs/issues/380196
   nixpkgs.overlays = [
-	  (final: prev: {
-		   lldb = prev.lldb.overrideAttrs {
-		   dontCheckForBrokenSymlinks = true;
-		   };
-	   })
+    (final: prev: {
+      lldb = prev.lldb.overrideAttrs {
+        dontCheckForBrokenSymlinks = true;
+      };
+    })
   ];
 
   # List packages installed in system profile. To search, run:
@@ -144,29 +155,29 @@
   ];
 
   # Create systemd service
-  systemd.services.logiops = {
-    description = "An unofficial userspace driver for HID++ Logitech devices";
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.logiops}/bin/logid";
-    };
-  };
+  # systemd.services.logiops = {
+  #   description = "An unofficial userspace driver for HID++ Logitech devices";
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     ExecStart = "${pkgs.logiops}/bin/logid";
+  #   };
+  # };
 
-  # Configuration for logiops
-  environment.etc."logid.cfg".text = ''
-    devices: ({
-      name: "Marathon Mouse/Performance Plus M705";
-      smartshift: {
-        on: true;
-        threshold: 12;
-      };
-      hiresscroll: {
-        hires: true;
-        target: false;
-      };
-      dpi: 1200;
-    });
-  '';
+  # # Configuration for logiops
+  # environment.etc."logid.cfg".text = ''
+  #   devices: ({
+  #     name: "Marathon Mouse/Performance Plus M705";
+  #     smartshift: {
+  #       on: true;
+  #       threshold: 12;
+  #     };
+  #     hiresscroll: {
+  #       hires: false;
+  #       target: false;
+  #     };
+  #     dpi: 1200;
+  #   });
+  # '';
 
   programs.dconf.enable = true;
 
@@ -181,24 +192,24 @@
   programs.zsh = {
     enable = true;
     ohMyZsh = {
-    	enable = true;
+      enable = true;
     };
   };
 
   # List services that you want to enable:
 
   services.xserver.imwheel = {
-      enable = true;
-      rules = {
+    enable = true;
+    rules = {
       ".*" = ''
-	      None,      Up,   Button4, 4
-	      None,      Down, Button5, 4
-	      Shift_L,   Up,   Shift_L|Button4, 2
-	      Shift_L,   Down, Shift_L|Button5, 2
-	      Control_L, Up,   Control_L|Button4
-	      Control_L, Down, Control_L|Button5
+        None,      Up,   Button4, 4
+        None,      Down, Button5, 4
+        Shift_L,   Up,   Shift_L|Button4, 2
+        Shift_L,   Down, Shift_L|Button5, 2
+        Control_L, Up,   Control_L|Button4
+        Control_L, Down, Control_L|Button5
       '';
-      };
+    };
   };
 
   # Enable the OpenSSH daemon.
