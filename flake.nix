@@ -29,8 +29,8 @@
               extraSpecialArgs = { inherit erosanix; };
             };
           }
-          ./hosts/imac/configuration.nix
           agenix.nixosModules.default
+          ./hosts/imac/configuration.nix
         ];
       };
     };
