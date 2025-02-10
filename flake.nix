@@ -22,10 +22,12 @@
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.jlou2u = import ./hosts/imac/home.nix;
-            home-manager.extraSpecialArgs = { inherit erosanix; };
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.jlou2u = import ./hosts/imac/home.nix;
+              extraSpecialArgs = { inherit erosanix; };
+            };
           }
           ./hosts/imac/configuration.nix
           agenix.nixosModules.default
