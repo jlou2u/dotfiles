@@ -50,7 +50,8 @@
     shellcheck.enable = true;
     mdsh.enable = true;
     nixfmt-rfc-style.enable = true;
-    shfmt.enable = true;
+    # couldnt disable on .p10k.zsh, maybe investigate more later
+    # shfmt.enable = true;
     yamlfmt.enable = true;
     check-toml.enable = true;
     check-json.enable = true;

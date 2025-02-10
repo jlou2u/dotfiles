@@ -181,7 +181,40 @@ in
 
     extraPackages = [
       pkgs.black
+      pkgs.nginx-language-server
+      pkgs.clang
+      pkgs.cmake-lint
+      pkgs.hlint
+      pkgs.imagemagick
+      pkgs.lazygit
+      pkgs.lua51Packages.lua
+      pkgs.lua-language-server
+      pkgs.luajit
+      pkgs.manix
+      pkgs.neocmakelsp
+      pkgs.nil
+      pkgs.nixd
+      pkgs.nixfmt-rfc-style
+      pkgs.poppler_utils
+      pkgs.tectonic
+      pkgs.tree-sitter
     ];
+
+    extraPython3Packages =
+      pyPkgs: with pyPkgs; [
+        pylatexenc
+        pynvim
+        jupyter-client
+        cairosvg # for image rendering
+        pnglatex # for image rendering
+        plotly # for image rendering
+        numpy
+        matplotlib
+        sympy
+        pyperclip
+        ipython
+        ipykernel
+      ];
 
     coc.enable = true;
 
@@ -439,6 +472,12 @@ in
     enable = true;
     source = ./ov.yaml;
     target = "${config.xdg.configHome}/ov/config.yaml";
+  };
+
+  home.file.".p10k.zsh" = {
+    enable = true;
+    source = ../../.p10k.zsh;
+    target = ".p10k.zsh";
   };
 
   # This installs my GPG signing keys for Github
