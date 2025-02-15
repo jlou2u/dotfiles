@@ -5,7 +5,6 @@
 {
   config,
   pkgs,
-  agenix,
   ...
 }:
 
@@ -176,17 +175,28 @@ in
     git
     gnome-tweaks
     jetbrains.idea-ultimate
+    lact
     logiops
+    nix-index
+    pciutils
+    power-profiles-daemon
     vim
     whitesur-gtk-theme
     wget
   ];
 
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibername.enable = false;
+    hybrid-sleep.enable = false;
+  };
+
   systemd.services.openai = {
     enable = true;
     description = "Set OpenAI API Key";
     environment = {
-      OPENAI_API_KEY = "";
+      OPENAI_API_KEY = "TODO";
     };
     wantedBy = [ "multi-user.target" ];
   };

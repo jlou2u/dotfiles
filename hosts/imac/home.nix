@@ -65,7 +65,7 @@ in
   programs.alacritty = {
     enable = true;
     settings = {
-      window.decorations = "None";
+      # window.decorations = "None";
       window.startup_mode = "Maximized";
       selection.save_to_clipboard = true;
       terminal.shell = {
