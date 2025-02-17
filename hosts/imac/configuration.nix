@@ -28,7 +28,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "imac-i7"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -168,13 +168,13 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # see https://github.com/NixOS/nixpkgs/issues/380196
-  nixpkgs.overlays = [
-    (final: prev: {
-      lldb = prev.lldb.overrideAttrs {
-        dontCheckForBrokenSymlinks = true;
-      };
-    })
-  ];
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     lldb = prev.lldb.overrideAttrs {
+  #       dontCheckForBrokenSymlinks = true;
+  #     };
+  #   })
+  # ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -188,7 +188,7 @@ in
     gnome-tweaks
     jetbrains.idea-ultimate
     jetbrains.pycharm-professional
-    lact
+    # lact
     logiops
     nix-index
     pciutils

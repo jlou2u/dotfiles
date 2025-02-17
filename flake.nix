@@ -17,7 +17,7 @@
       agenix,
     }:
     {
-      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations."imac-i7" = nixpkgs.lib.nixosSystem {
         modules = [
           nixos-hardware.nixosModules.apple-imac-14-2
           stylix.nixosModules.stylix

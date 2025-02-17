@@ -18,24 +18,14 @@ in
 
     packages = with pkgs; [
 
-      # haskell
-      # TODO - move to devenv by project
-      # pkgs.cabal-install
-      # pkgs.ghc
-      # pkgs.haskell-language-server
-      # pkgs.haskellPackages.hie-bios
-      # pkgs.haskellPackages.stack
-      # pkgs.haskellPackages.stylish-haskell
-
       pkgs.ack
       pkgs.any-nix-shell # fish support for nix shell
-      pkgs.bat # A cat(1) clone with wings.
       pkgs.bottom # alternative to htop & ytop
       pkgs.bzip2
       pkgs.coreutils
       pkgs.docker
       pkgs.docker-compose
-      # pkgs.drawio               # diagram design
+      pkgs.drawio # diagram design
       pkgs.eza # a better `ls`
       pkgs.fd
       pkgs.findutils
@@ -94,7 +84,7 @@ in
     userEmail = "justin.lewis@gmail.com";
     signing = {
       key = "179D1C02";
-      signByDefault = false;
+      signByDefault = true;
     };
 
     delta = {
