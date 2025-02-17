@@ -1,24 +1,25 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     stylix.url = "github:danth/stylix";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    erosanix.url = "github:emmanuelrosa/erosanix";
     agenix.url = "github:ryantm/agenix";
   };
   outputs =
     {
       self,
       nixpkgs,
+      nixos-hardware,
       stylix,
       home-manager,
-      erosanix,
       agenix,
     }:
     {
       nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
         modules = [
+          nixos-hardware.nixosModules.apple-imac-14-2
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
@@ -27,7 +28,6 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.jlou2u = import ./hosts/imac/home.nix;
-              extraSpecialArgs = { inherit erosanix; };
             };
           }
           agenix.nixosModules.default

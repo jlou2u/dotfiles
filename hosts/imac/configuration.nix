@@ -70,7 +70,6 @@ in
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "mac";
     # Turn Caps Lock into Ctrl
     options = "ctrl:nocaps";
   };
@@ -132,6 +131,19 @@ in
       ];
       openssh.authorizedKeys.keys = keys;
     };
+    ltprod = {
+      isNormalUser = true;
+      description = "LT Productions";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+      packages =
+        with pkgs;
+        [
+        ];
+      openssh.authorizedKeys.keys = keys;
+    };
   };
 
   security.sudo = {
@@ -175,6 +187,7 @@ in
     git
     gnome-tweaks
     jetbrains.idea-ultimate
+    jetbrains.pycharm-professional
     lact
     logiops
     nix-index

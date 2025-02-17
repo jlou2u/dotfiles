@@ -55,7 +55,6 @@ in
       pkgs.tree
       pkgs.vscode
       pkgs.xz
-      # erosanix.packages.x86_64-linux.chess-ultra
       pkgs.zsh-powerlevel10k
     ];
   };
