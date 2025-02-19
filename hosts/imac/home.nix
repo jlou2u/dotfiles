@@ -1,7 +1,8 @@
 {
+  inputs,
+  lib,
   config,
   pkgs,
-  lib,
   ...
 }:
 
@@ -12,6 +13,19 @@ let
   ];
 in
 {
+
+  imports = [ ];
+
+  nixpkgs = {
+    overlays =
+      [
+      ];
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
+  };
+
   home = {
     username = "jlou2u";
     homeDirectory = "/home/jlou2u";
@@ -50,7 +64,9 @@ in
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs.home-manager = {
+    enable = true;
+  };
   programs.alacritty = {
     enable = true;
     settings = {
@@ -271,11 +287,11 @@ in
           let g:syntastic_auto_jump = 0
 
           " colorscheme dichromatic
-          colorscheme 3dglasses
+          " colorscheme 3dglasses
 
           " use background color from terminal
-          highlight Normal ctermbg=none
-          highlight NonText ctermbg=none
+          " highlight Normal ctermbg=none
+          " highlight NonText ctermbg=none
 
           " if hidden is not set, TextEdit might fail.
           set hidden
@@ -446,13 +462,13 @@ in
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      PAGER = "ov";
+      # PAGER = "ov";
     };
     plugins = [
       {
         name = "zsh-powerlevel10k";
-        src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/";
-        file = "powerlevel10k.zsh-theme";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
     ];
   };
@@ -470,28 +486,28 @@ in
   };
 
   # This installs my GPG signing keys for Github
-  systemd.user.services.gpg-import-keys = {
-    Unit = {
-      Description = "Import gpg keys";
-      After = [ "gpg-agent.socket" ];
-    };
+  # systemd.user.services.gpg-import-keys = {
+  #   Unit = {
+  #     Description = "Import gpg keys";
+  #     After = [ "gpg-agent.socket" ];
+  #   };
 
-    Service = {
-      Type = "oneshot";
-      ExecStart = toString (
-        pkgs.writeScript "gpg-import-keys" ''
-          #! ${pkgs.runtimeShell} -el
-          ${lib.optionalString (gpgKeys != [ ]) ''
-            ${pkgs.gnupg}/bin/gpg --import ${lib.concatStringsSep " " gpgKeys}
-          ''}
-        ''
-      );
-    };
+  #   Service = {
+  #     Type = "oneshot";
+  #     ExecStart = toString (
+  #       pkgs.writeScript "gpg-import-keys" ''
+  #         #! ${pkgs.runtimeShell} -el
+  #         ${lib.optionalString (gpgKeys != [ ]) ''
+  #           ${pkgs.gnupg}/bin/gpg --import ${lib.concatStringsSep " " gpgKeys}
+  #         ''}
+  #       ''
+  #     );
+  #   };
 
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
+  #   Install = {
+  #     WantedBy = [ "default.target" ];
+  #   };
+  # };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -501,4 +517,5 @@ in
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
+
 }

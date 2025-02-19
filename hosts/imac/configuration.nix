@@ -3,18 +3,19 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
+  inputs,
+  lib,
   config,
   pkgs,
   ...
 }:
 
 let
-  user = "jlou2u";
   keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMiQj3fB0odhdbTVP2sE/XPp3KyxA7nqTbVF9VOXP5zm" ];
 in
 {
   imports = [
-    # Include the results of the hardware scan.
+    # inputs.nixos-hardware.nixosModules.apple-imac-14-2
     ./hardware-configuration.nix
   ];
 
@@ -28,8 +29,10 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "imac-i7"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking = {
+    hostName = "imac-i7"; # Define your hostname.
+    wireless.enable = false; # Enables wireless support via wpa_supplicant.
+  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -56,12 +59,8 @@ in
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    # Better support for general peripherals
-    libinput.enable = true;
-  };
+  services.xserver.enable = true;
+  services.libinput.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -78,7 +77,6 @@ in
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   security.pam.sshAgentAuth.enable = true;
   services.pipewire = {
@@ -95,7 +93,7 @@ in
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  # services.libinput.enable = true;
 
   stylix = {
     enable = true;
@@ -108,43 +106,39 @@ in
       # sansSerif = "";
       # serif = "";
       sizes = {
-        applications = 14;
-        desktop = 8;
+        applications = 24;
+        desktop = 14;
       };
     };
   };
 
-  users.defaultUserShell = pkgs.zsh;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    ${user} = {
-      isNormalUser = true;
-      description = "Justin Lewis";
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-      packages = with pkgs; [
-        thunderbird
-        home-manager
-      ];
-      openssh.authorizedKeys.keys = keys;
-    };
-    ltprod = {
-      isNormalUser = true;
-      description = "LT Productions";
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-      packages =
-        with pkgs;
-        [
-        ];
-      openssh.authorizedKeys.keys = keys;
-    };
-  };
+  # users.users = {
+  #   jlou2u = {
+  #     isNormalUser = true;
+  #     description = "Justin Lewis";
+  #     extraGroups = [
+  #       "networkmanager"
+  #       "wheel"
+  #     ];
+  #     packages = with pkgs; [
+  #     ];
+  #     openssh.authorizedKeys.keys = keys;
+  #   };
+  #   ltprod = {
+  #     isNormalUser = true;
+  #     description = "LT Productions";
+  #     extraGroups = [
+  #       "networkmanager"
+  #       "wheel"
+  #     ];
+  #     packages =
+  #       with pkgs;
+  #       [
+  #       ];
+  #     openssh.authorizedKeys.keys = keys;
+  #   };
+  # };
 
   security.sudo = {
     enable = true;
@@ -186,8 +180,8 @@ in
     fzf
     git
     gnome-tweaks
-    jetbrains.idea-ultimate
-    jetbrains.pycharm-professional
+    # jetbrains.idea-ultimate
+    # jetbrains.pycharm-professional
     # lact
     logiops
     nix-index
@@ -206,7 +200,7 @@ in
   };
 
   systemd.services.openai = {
-    enable = true;
+    enable = false;
     description = "Set OpenAI API Key";
     environment = {
       OPENAI_API_KEY = "TODO";
@@ -249,13 +243,6 @@ in
     enableSSHSupport = true;
   };
 
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
-      enable = true;
-    };
-  };
-
   # List services that you want to enable:
 
   services.xserver.imwheel = {
@@ -287,6 +274,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }
