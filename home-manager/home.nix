@@ -24,6 +24,7 @@
     ./git.nix
     ./nvim.nix
     ./tmux.nix
+    ./zsh.nix
   ];
 
   home = {
@@ -39,6 +40,7 @@
   home.packages = with pkgs; [
     # steam
     devenv
+    eza
     jetbrains-toolbox
     pre-commit
   ];

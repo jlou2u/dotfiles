@@ -133,6 +133,17 @@
     tree
     vim
     wget
+
+    # zsh related
+    oh-my-zsh
+    zsh
+    zsh-completions
+    zsh-powerlevel10k
+  ];
+
+  environment.shells = with pkgs; [
+    bash
+    zsh
   ];
 
   nix =
@@ -171,6 +182,7 @@
   users.users = {
     jlou2u = {
       isNormalUser = true;
+      shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
@@ -180,6 +192,26 @@
         "networkmanager"
       ];
     };
+  };
+
+  # system level programs
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    shellAliases = {
+      nixos-switch = "nixos-rebuild switch --flake /home/jlou2u/dotfiles --use-remote-sudo";
+    };
+    interactiveShellInit = ''
+      HISTFILE="$HOME/.zsh_history"
+      HISTSIZE="10000"
+      SAVEHIST="10000"
+      setopt extendedglob hist_ignore_all_dups
+      unsetopt autocd nomatch
+      # bindkey -v
+      ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+      source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    '';
   };
 
   # This setups a SSH server. Very important if you're setting up a headless system.
