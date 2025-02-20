@@ -31,11 +31,15 @@
     homeDirectory = "/home/jlou2u";
   };
 
+  # maybe needed for jetbrains
+  # programs.nix-ld.enable = true;
+
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
     # steam
     devenv
+    jetbrains-toolbox
     pre-commit
   ];
 

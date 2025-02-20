@@ -86,8 +86,10 @@
       # sansSerif = "";
       # serif = "";
       sizes = {
-        applications = 14;
-        desktop = 12;
+        applications = 20;
+        desktop = 18;
+        terminal = 18;
+        popups = 14;
       };
     };
   };
@@ -145,6 +147,15 @@
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
+        # for cachix
+        "trusted-users" = [
+          "root"
+          "jlou2u"
+        ];
+        "extra-substituters" = [ "https://devenv.cachix.org" ];
+        "extra-trusted-public-keys" = [
+          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+        ];
       };
       # Opinionated: disable channels
       channel.enable = false;
