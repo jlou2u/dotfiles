@@ -19,6 +19,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     ./alacritty.nix
+    ./bat.nix
     ./direnv.nix
     ./firefox.nix
     ./git.nix
@@ -41,6 +42,7 @@
     # steam
     devenv
     eza
+    fzf
     jetbrains-toolbox
     pre-commit
   ];

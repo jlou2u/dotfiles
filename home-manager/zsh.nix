@@ -8,7 +8,7 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autocd = false;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     history.size = 10000;
     history.share = true;
 
@@ -53,6 +53,8 @@
       #      bindkey '^I' forward-word         # tab
       #      bindkey '^[[Z' backward-word      # shift+tab
       #      bindkey '^ ' autosuggest-accept   # ctrl+space
+
+            source <(${pkgs.fzf}/bin/fzf --zsh)
     '';
 
     oh-my-zsh = {
@@ -73,9 +75,6 @@
       # Overrides those provided by OMZ libs, plugins, and themes.
       # For a full list of active aliases, run `alias`.
       cat = "bat";
-      diff = "batdiff";
-      rg = "batgrep";
-      man = "batman";
 
       l = "eza -lah";
       la = "eza -lah";
