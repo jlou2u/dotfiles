@@ -75,6 +75,20 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
+  fonts = {
+    fontDir.enable = true;
+    packages = with pkgs; [
+      dina-font
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      nerdfonts
+      noto-fonts
+      proggyfonts
+    ];
+  };
+
   stylix = {
     enable = true;
     image = ./wallpaper.png;
@@ -82,9 +96,18 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/summerfruit-light.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-light.yaml";
     fonts = {
-      # monospace = "";
-      # sansSerif = "";
-      # serif = "";
+      monospace = {
+        package = pkgs.nerdfonts;
+        name = "D2CodingLigature Nerd Font Mono";
+      };
+      sansSerif = {
+        package = pkgs.nerdfonts;
+        name = "D2CodingLigature Nerd Font Propo";
+      };
+      serif = {
+        package = pkgs.nerdfonts;
+        name = "D2CodingLigature Nerd Font";
+      };
       sizes = {
         applications = 20;
         desktop = 18;
@@ -121,6 +144,7 @@
 
   environment.systemPackages = with pkgs; [
     coreutils
+    fd
     fzf
     git
     gnome-tweaks
