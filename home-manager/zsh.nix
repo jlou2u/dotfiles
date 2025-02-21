@@ -44,8 +44,8 @@
             setopt inc_append_history # save history entries as soon as they are entered
 
             # auto complete options
-            setopt auto_list # automatically list choices on ambiguous completion
-            setopt auto_menu # automatically use menu completion
+            # setopt auto_list # automatically list choices on ambiguous completion
+            # setopt auto_menu # automatically use menu completion
             zstyle ':completion:*' menu select # select completions with arrow keys
             zstyle ':completion:*' group-name "" # group results by category
             zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion

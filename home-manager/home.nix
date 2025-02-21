@@ -43,6 +43,7 @@
     devenv
     eza
     fzf
+    gimp
     jetbrains-toolbox
     pre-commit
   ];
