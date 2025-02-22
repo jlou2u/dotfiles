@@ -144,6 +144,7 @@
 
   environment.systemPackages = with pkgs; [
     coreutils
+    discord-ptb
     fd
     fzf
     git
