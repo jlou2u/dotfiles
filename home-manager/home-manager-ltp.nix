@@ -10,6 +10,7 @@
     isNormalUser = true;
     home = "/home/ltp";
     description = "LTP";
+    linger = true;
   };
 
   home-manager.users.ltp =
@@ -22,6 +23,9 @@
       systemd.user.services.ltpService =
         { pkgs, ... }:
         {
+          enable = true;
+          after = [ "network.target" ];
+          wantedBy = [ "multi-user.target" ];
           description = "LTP Main Service";
           serviceConfig = {
             ExecStart = "${pkgs.ltp}/bin/ltp";
