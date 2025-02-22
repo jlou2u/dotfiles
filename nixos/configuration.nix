@@ -153,6 +153,7 @@
     nix-index
     ripgrep
     silver-searcher
+    spotify
     time
     tree
     vim
