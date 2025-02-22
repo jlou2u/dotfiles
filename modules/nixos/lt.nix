@@ -21,12 +21,6 @@ with lib;
       description = "Path to the LT repository.";
     };
 
-    ltPackage = mkOption {
-      type = types.str;
-      default = "lt";
-      description = "Name of the LT package.";
-    };
-
   };
 
   config = mkIf config.lt.enable {
