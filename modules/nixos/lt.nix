@@ -36,7 +36,7 @@ with lib;
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "${ltPackage}/bin/lt";
+        ExecStart = "${pkgs.lt}/bin/lt";
         WorkingDirectory = config.lt.repoPath;
         User = "ltp";
         # Group = "somegroup";
