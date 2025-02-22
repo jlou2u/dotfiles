@@ -68,7 +68,10 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.jlou2u = import ./home-manager/home.nix;
+              home-manager.users = {
+                jlou2u = import ./home-manager/jlou2u.nix;
+                ltp = import ./home-manager/ltp.nix;
+              };
             }
           ];
         };
