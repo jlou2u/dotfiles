@@ -15,7 +15,7 @@ with lib;
       description = "Enable the LT service.";
     };
 
-    repositoryPath = mkOption {
+    repoPath = mkOption {
       type = types.str;
       default = "/opt/lt";
       description = "Path to the LT repository.";
@@ -31,7 +31,7 @@ with lib;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = "${pkgs.lt}/bin/lt";
-        WorkingDirectory = config.lt.repositoryPath;
+        WorkingDirectory = config.lt.repoPath;
         User = "ltp";
         # Group = "somegroup";
       };
