@@ -70,14 +70,12 @@
               home-manager.useUserPackages = true;
               home-manager.users.jlou2u = import ./home-manager/home.nix;
             }
-            ./modules/nixos
-          ];
-          configuration =
-            { config, pkgs, ... }:
+            ./modules/nixos/lt.nix
             {
               lt.enable = true;
               lt.repoPath = "/opt/lt";
-            };
+            }
+          ];
         };
       };
     };
