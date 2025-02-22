@@ -33,7 +33,6 @@ with lib;
         ExecStart = "${pkgs.lt}/bin/lt";
         WorkingDirectory = config.lt.repoPath;
         User = "ltp";
-        # Group = "somegroup";
       };
     };
 
