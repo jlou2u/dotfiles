@@ -21,6 +21,12 @@ with lib;
       description = "Path to the LT repository.";
     };
 
+    ltPackage = mkOption {
+      type = types.str;
+      default = "lt";
+      description = "Name of the LT package.";
+    };
+
   };
 
   config = mkIf config.lt.enable {
@@ -30,7 +36,7 @@ with lib;
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.lt}/bin/lt";
+        ExecStart = "${ltPackage}/bin/lt";
         WorkingDirectory = config.lt.repoPath;
         User = "ltp";
         # Group = "somegroup";
