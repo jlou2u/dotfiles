@@ -189,6 +189,7 @@
         "trusted-users" = [
           "root"
           "jlou2u"
+          "ltp"
         ];
         "extra-substituters" = [ "https://devenv.cachix.org" ];
         "extra-trusted-public-keys" = [
@@ -218,6 +219,9 @@
         "wheel"
         "networkmanager"
       ];
+    };
+    ltp = {
+      isNormalUser = true;
     };
   };
 
