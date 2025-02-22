@@ -30,7 +30,7 @@ with lib;
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.lt}/bin/lt";
+        ExecStart = "${pkgs.lt.repoPath}/bin/lt";
         WorkingDirectory = config.lt.repoPath;
         User = "ltp";
       };
