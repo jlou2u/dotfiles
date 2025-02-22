@@ -70,7 +70,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.jlou2u = import ./home-manager/home.nix;
             }
-            ./home-manager/home-manager-ltp.nix
+            ./modules/nixos
           ];
         };
       };
