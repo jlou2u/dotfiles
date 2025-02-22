@@ -20,13 +20,14 @@
       home.username = "ltp";
       home.homeDirectory = "/home/ltp";
 
-      systemd.user.services.ltpService = {
+      systemd.services.ltpService = {
         enable = true;
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
         description = "LTP Main Service";
         serviceConfig = {
           ExecStart = "${pkgs.ltp}/bin/ltp";
+          User = "ltp";
           WorkingDirectory = "/opt/ltp";
           Restart = "always";
         };
