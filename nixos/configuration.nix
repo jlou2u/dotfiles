@@ -77,6 +77,8 @@
     #media-session.enable = true;
   };
 
+  services.lt.enable = true;
+
   fonts = {
     fontDir.enable = true;
     packages = with pkgs; [
@@ -222,7 +224,6 @@
     };
     ltp = {
       isNormalUser = true;
-      extraGroups = [ "ltp" ];
     };
   };
 

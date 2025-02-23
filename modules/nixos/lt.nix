@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (lib) mkOption types;
+  inherit (lib) mkIf mkOption types;
   cfg = config.services.lt;
 in
 {
@@ -20,18 +20,18 @@ in
     };
   };
 
-  config = {
+  config = mkIf config.services.lt.enable {
     systemd.services.lt = {
       description = "lt";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "date";
+        ExecStart = "${pkgs.lt.outPath}/bin/lt";
         Restart = "always";
         RestartSec = "10";
         User = "ltp";
-        Group = "ltp";
+        Group = "users";
         Environment = "LT_CONFIG=foobar";
       };
     };
