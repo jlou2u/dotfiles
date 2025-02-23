@@ -27,7 +27,7 @@ in
       after = [ "network.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.lt.outPath}/bin/lt";
+        ExecStart = "${pkgs.lt.lt}/bin/lt";
         Restart = "always";
         RestartSec = "10";
         User = "ltp";

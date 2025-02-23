@@ -48,9 +48,11 @@
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
+
       # Reusable nixos modules you might want to export
       # These are usually stuff you would upstream into nixpkgs
       nixosModules = import ./modules/nixos;
+
       # Reusable home-manager modules you might want to export
       # These are usually stuff you would upstream into home-manager
       homeManagerModules = import ./modules/home-manager;
@@ -61,7 +63,6 @@
         imac7 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            # > Our main nixos configuration file <
             stylix.nixosModules.stylix
             ./nixos/configuration.nix
             home-manager.nixosModules.home-manager
