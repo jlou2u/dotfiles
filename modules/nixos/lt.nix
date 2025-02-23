@@ -27,11 +27,11 @@ in
       after = [ "network.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.lt}/bin/lt";
+        ExecStart = "date";
         Restart = "always";
         RestartSec = "10";
-        User = "lt";
-        Group = "lt";
+        User = "ltp";
+        Group = "ltp";
         Environment = "LT_CONFIG=foobar";
       };
     };

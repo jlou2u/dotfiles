@@ -222,6 +222,7 @@
     };
     ltp = {
       isNormalUser = true;
+      extraGroups = [ "ltp" ];
     };
   };
 
