@@ -64,9 +64,9 @@
 
     extraPackages = [
       pkgs.black
-      pkgs.nginx-language-server
       pkgs.clang
       pkgs.cmake-lint
+      pkgs.efm-langserver
       pkgs.hlint
       pkgs.imagemagick
       pkgs.lazygit
@@ -75,16 +75,21 @@
       pkgs.luajit
       pkgs.manix
       pkgs.neocmakelsp
+      pkgs.nginx-language-server
       pkgs.nil
       pkgs.nixd
       pkgs.nixfmt-rfc-style
       pkgs.poppler_utils
+      pkgs.pyright
       pkgs.tectonic
       pkgs.tree-sitter
     ];
 
     extraPython3Packages =
       pyPkgs: with pyPkgs; [
+        black
+        python-lsp-black
+        python-lsp-server
         pylatexenc
         pynvim
         jupyter-client
@@ -165,7 +170,7 @@
           let g:syntastic_auto_jump = 0
 
           " colorscheme dichromatic
-          colorscheme 3dglasses
+          " colorscheme 3dglasses
 
           " use background color from terminal
           highlight Normal ctermbg=none
@@ -186,64 +191,85 @@
 
           " F5 to strip trailing whitespace
           nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-
     '';
 
     extraLuaConfig = ''
 
-      -- smartcolumn setup
-      local config = {
-      colorcolumn = "80",
-      disabled_filetypes = { "help", "text", "markdown" },
-      custom_colorcolumn = {},
-      scope = "window",
-      }
-      require("smartcolumn").setup()
+            -- smartcolumn setup
+            local config = {
+            colorcolumn = "80",
+            disabled_filetypes = { "help", "text", "markdown" },
+            custom_colorcolumn = {},
+            scope = "window",
+            }
+            require("smartcolumn").setup()
 
-      -- indent-blankline setup
-      local highlight = {
-      "RainbowRed",
-      "RainbowYellow",
-      "RainbowBlue",
-      "RainbowOrange",
-      "RainbowGreen",
-      "RainbowViolet",
-      "RainbowCyan",
-      }
-      local hooks = require "ibl.hooks"
-      -- create the highlight groups in the highlight setup hook, so they are reset
-      -- every time the colorscheme changes
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-      vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-      vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-      vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-      vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-      vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-      vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-      vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-      end)
+            -- indent-blankline setup
+            local highlight = {
+            "RainbowRed",
+            "RainbowYellow",
+            "RainbowBlue",
+            "RainbowOrange",
+            "RainbowGreen",
+            "RainbowViolet",
+            "RainbowCyan",
+            }
+            local hooks = require "ibl.hooks"
+            -- create the highlight groups in the highlight setup hook, so they are reset
+            -- every time the colorscheme changes
+            hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+            vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+            vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+            vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+            vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+            end)
 
-      vim.g.rainbow_delimiters = { highlight = highlight }
-      require("ibl").setup { scope = { highlight = highlight } }
+            vim.g.rainbow_delimiters = { highlight = highlight }
+            require("ibl").setup { scope = { highlight = highlight } }
 
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+            hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 
-      -- telescope setup
-      local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-      vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+            -- telescope setup
+            local builtin = require('telescope.builtin')
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+            vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+            vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+            vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-      -- neogit setup
-      local neogit = require('neogit')
-      neogit.setup {}
+            -- neogit setup
+            local neogit = require('neogit')
+            neogit.setup {}
 
-      -- pylsp setup
-      require'lspconfig'.pylsp.setup{}
+            -- lsp setup
+            require'lspconfig'.pylsp.setup{
+              settings = {
+                pylsp = {
+                  plugins = {
+                    pycodestyle = {
+                    },
+                    black = {
+                      enabled = true
+                    }
+                  }
+                }
+              }
+            }
 
-      -- barbecue setup
-      require('barbecue').setup()
+            -- barbecue setup
+            require('barbecue').setup()
+
+            vim.api.nvim_create_autocmd("BufWritePre", {
+            callback = function()
+              local mode = vim.api.nvim_get_mode().mode
+              if vim.bo.modified == true and mode == 'n' then
+                  vim.cmd('lua vim.lsp.buf.format()')
+              else
+              end
+            end
+      })
     '';
   };
 }

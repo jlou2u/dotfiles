@@ -7,6 +7,6 @@
       self = super.pkgs;
     in
     {
-      lt = self.callPackage /home/jlou2u/code/py-lewis-trading { };
+      py-lewis-trading = self.callPackage /home/jlou2u/code/py-lewis-trading { };
     };
 }

@@ -77,7 +77,7 @@
     #media-session.enable = true;
   };
 
-  # services.lt.enable = true;
+  services.lt.enable = true;
 
   fonts = {
     fontDir.enable = true;
