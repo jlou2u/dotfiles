@@ -43,10 +43,21 @@
     devenv
     eza
     fzf
+    gcr
     gimp
     jetbrains-toolbox
+    pinentry-curses
     pre-commit
   ];
+
+  programs.gpg.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    verbose = true;
+    pinentryPackage = pkgs.pinentry-curses;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

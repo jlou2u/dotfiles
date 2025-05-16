@@ -6,7 +6,7 @@
     userName = "Justin Lewis";
     userEmail = "justin.lewis@gmail.com";
     signing = {
-      key = "179D1C02";
+      key = "01B989E591C255BD";
       signByDefault = true;
     };
 
@@ -23,6 +23,7 @@
       log.date = "relative";
       format.pretty = "format:%C(auto,yellow)%h%C(auto,red)% G? %C(auto,cyan)%>(12,trunc)%ad %C(auto,bold blue)%<(7,trunc)%aN%C(auto,bold yellow)%gD%D %C(auto,reset)%s";
       core.fileMode = "false";
+      core.editor = "nvim";
     };
   };
 }

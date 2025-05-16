@@ -170,7 +170,7 @@
           let g:syntastic_auto_jump = 0
 
           " colorscheme dichromatic
-          " colorscheme 3dglasses
+          colorscheme 3dglasses
 
           " use background color from terminal
           highlight Normal ctermbg=none
